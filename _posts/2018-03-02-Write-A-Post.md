@@ -28,4 +28,31 @@ mermaid: true
     cd YuchaoZheng88.github.io/
     ```
     {: .nolineno file="quickinit.sh" }
+    
+    ``` bash
+    #! /bin/bash
+    
+    echo inputCommitMessage
+    read commit
+    
+    git clone https://github.com/YuchaoZheng88/zenbro.github.io.git
+    cd zenbro.github.io
+    git submodule init
+    git submodule update
+    cd YuchaoZheng88.github.io/
+    git checkout main
+    cd ..
+    bundle update
+    jekyll build -d YuchaoZheng88.github.io
+    cd YuchaoZheng88.github.io/
+    git add .
+    git commit -m "$commit"
+    git push
+    cd ..
+    git add .
+    git commit -m "$commit"
+    git push
+    
+    ```
+    {: .nolineno file="quickinit.sh" }
 3. push YuchaoZheng88.github.io, then push main zenbro.github.io
