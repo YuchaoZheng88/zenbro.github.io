@@ -25,3 +25,21 @@ mermaid: true
 - push the YuchaoZheng88.github.io submodule
 - ``` cd .. ```
 - push the zenbro.github.io module
+
+##### easy way:
+
+``` bash
+#! /bin/bash
+
+git clone https://github.com/YuchaoZheng88/zenbro.github.io.git
+cd zenbro.github.io
+git submodule init
+git submodule update
+cd YuchaoZheng88.github.io/
+git checkout main
+cd ..
+bundle update
+jekyll build -d YuchaoZheng88.github.io
+cd YuchaoZheng88.github.io/
+```
+{: .nolineno file="quickinit.sh" }
