@@ -1,7 +1,7 @@
 ---
 title: How to write a post
 author: Yuchao
-date: 2022-03-27 11:33:00 +0800
+date: 2018-03-02 11:33:00 +0800
 categories: [dev]
 tags: [jekyll, git]
 math: true
