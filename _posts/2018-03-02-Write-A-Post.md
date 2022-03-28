@@ -29,6 +29,9 @@ mermaid: true
     ```
     {: .nolineno file="quickinit.sh" }
     
+    ---
+    
+    More efficient way
     ``` bash
     #! /bin/bash
     
