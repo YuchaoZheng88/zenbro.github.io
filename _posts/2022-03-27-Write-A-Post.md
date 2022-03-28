@@ -1,45 +1,20 @@
 ---
-title: How to write a post
+title: Two Sum
 author: Yuchao
 date: 2022-03-27 11:33:00 +0800
 categories: [dev]
-tags: [jekyll, git]
+tags: [leetcode]
 math: true
 mermaid: true
 ---
 
-## How to write a post
+[Link](https://leetcode.com/problems/two-sum/)
 
-##### Steps:
-- Create post(s) at zenbro.github.io/_posts
-- ``` git clone https://github.com/YuchaoZheng88/zenbro.github.io.git ```
-- ``` cd zenbro.github.io ```
-- ``` git submodule init ```
-- ``` git submodule update ```
-- ``` cd YuchaoZheng88.github.io/ ```
-- ``` git checkout main```
-- ``` cd .. ```
-- ``` bundle update ```
-- ``` jekyll build -d YuchaoZheng88.github.io ```
-- ``` cd YuchaoZheng88.github.io/ ```
-- push the YuchaoZheng88.github.io submodule
-- ``` cd .. ```
-- push the zenbro.github.io module
-
-##### easy way:
-
-``` bash
-#! /bin/bash
-
-git clone https://github.com/YuchaoZheng88/zenbro.github.io.git
-cd zenbro.github.io
-git submodule init
-git submodule update
-cd YuchaoZheng88.github.io/
-git checkout main
-cd ..
-bundle update
-jekyll build -d YuchaoZheng88.github.io
-cd YuchaoZheng88.github.io/
+JAVA HashMap
+```java
+    Map<Integer, Integer> map = new HashMap<>();
+    map.containskey(), map.get(),
 ```
-{: .nolineno file="quickinit.sh" }
+
+Python HashMap
+- https://docs.python.org/3/tutorial/datastructures.html#dictionaries
