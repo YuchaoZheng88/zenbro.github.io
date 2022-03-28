@@ -3,7 +3,7 @@ title: Two Sum
 author: Yuchao
 date: 2022-03-27 11:33:00 +0800
 categories: [dev]
-tags: [leetcode]
+tags: [leetcode, java, python]
 math: true
 mermaid: true
 ---
