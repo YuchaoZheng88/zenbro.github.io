@@ -2,8 +2,8 @@
 title: How to write a post
 author: Yuchao
 date: 2022-03-27 11:33:00 +0800
-categories: [Dev]
-tags: [Jekyll, Git]
+categories: [dev]
+tags: [jekyll, git]
 math: true
 mermaid: true
 ---
