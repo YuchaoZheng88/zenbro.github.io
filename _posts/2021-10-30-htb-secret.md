@@ -158,3 +158,4 @@ res = getchar();
 - ``` /var/crash$ apport-unpack _opt_count.1000.crash /tmp/0xdf ``` decompress the dump into a given directory
 - ``` strings -n 30 CoreDump ```
 - then get the SSH key from it.
+
