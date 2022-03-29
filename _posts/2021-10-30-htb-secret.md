@@ -71,6 +71,7 @@ get the TOKEN_SECRET from git old version
 - like ``` /api/priv ``` and ``` /api/logs ```
 
 ## Forge JWT
+https://jwt.io/
 #### decode
 ``` pip3 install pyjwt ```
 ``` python
@@ -138,7 +139,7 @@ prctl(PR_SET_DUMPABLE, 1);
 printf("Save results a file? [y/N]: ");
 res = getchar();
 ```
-{file="code.c" }
+{: .nolineno file="code.c" }
 
 - ```  ps auxww | grep count ``` find pid of the program
 - background the program at getchar()
