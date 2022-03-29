@@ -15,25 +15,6 @@ mermaid: true
 2. Run the bash
     ``` bash
     #! /bin/bash
-
-    git clone https://github.com/YuchaoZheng88/zenbro.github.io.git
-    cd zenbro.github.io
-    git submodule init
-    git submodule update
-    cd YuchaoZheng88.github.io/
-    git checkout main
-    cd ..
-    bundle update
-    jekyll build -d YuchaoZheng88.github.io
-    cd YuchaoZheng88.github.io/
-    ```
-    {: .nolineno file="quickinit.sh" }
-    
-    ---
-    
-    More efficient way
-    ``` bash
-    #! /bin/bash
     
     echo inputCommitMessage
     read commit
@@ -48,6 +29,7 @@ mermaid: true
     bundle update
     jekyll build -d YuchaoZheng88.github.io
     cd YuchaoZheng88.github.io/
+    
     git add .
     git commit -m "$commit"
     git push
