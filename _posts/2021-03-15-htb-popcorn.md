@@ -65,10 +65,19 @@ fg
 ```
 
 ## privesc
+
+#### Method 1: Linux PAM vulnerability
+
 at user`s file
 ``` find . -type f -ls ```
 ``` /.cache/motd.legal-displayed ``` looks interesting.
 - Googling for “motd.legal-displayed privesc”
 - https://www.exploit-db.com/exploits/14339
 - Linux PAM 1.1.0 (Ubuntu 9.10/10.04) - MOTD File Tampering Privilege Escalation
-- 
+- PAM will create ``` .cache/motd.legal-displayed ``` when login.
+- https://askubuntu.com/questions/256020/how-can-i-stop-the-automatic-creation-of-cache-motd-legal-displayed-file
+- sshd use pam to authenticate, so we need to ssh to the box.(as www-data)
+
+
+#### Method 2: Dirty Cow
+
