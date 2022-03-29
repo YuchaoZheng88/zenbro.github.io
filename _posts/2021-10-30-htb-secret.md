@@ -3,7 +3,7 @@ title: htb secret
 author: Yuchao
 date: 2021-10-30 00:00:00 +0000
 categories: [sec]
-tags: [htb, 0xdf, ippsec, express, nodejs, python, pyjwt, dotenv, jwt, nmap, feroxbuster, curl, git, privesc, c, coredump]
+tags: [htb]
 mermaid: true
 ---
 
