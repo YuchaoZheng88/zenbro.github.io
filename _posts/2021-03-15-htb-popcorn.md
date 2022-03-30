@@ -67,7 +67,16 @@ fg
 ## privesc
 
 #### Method 1: Linux PAM vulnerability
-
+show the programs use PAM
+```
+$ ls /etc/pam.d 
+chfn common-account common-session lightdm login passwd runuser sshd  su-l chpasswd  common-auth common-session-noninteractive lightdm-autologin newusers polkit-1 runuser-l su
+chsh common-password  cron lightdm-greeter other ppp samba sudo
+```
+The pam modules directory. Can be configured to the programs above
+```
+/usr/lib/x86_64-linux-gnu/security
+```
 at user`s file
 ``` find . -type f -ls ```
 ``` /.cache/motd.legal-displayed ``` looks interesting.
