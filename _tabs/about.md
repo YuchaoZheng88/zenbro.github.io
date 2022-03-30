@@ -8,4 +8,15 @@ order: 4
 <script src="https://tryhackme.com/badge/836492"></script>
 
 ## Some useful online course
-![aaabc](/123.png){: width="972" height="589" }
+
+#### THM penetration test learning path
+![jrpentest](/jrpen.png){: width="250" }
+
+#### Linux Privilege Escalation for OSCP on Udemy
+![linuxpriv](/linuxesc.jpg){: width="250" }
+
+#### Computer Security: A hands-on approach
+![computersecurity](/wenliangcomputersecurity.jpg){: width="250" }
+
+#### Pre Security
+![presec](/presec.png){: width="250" }
