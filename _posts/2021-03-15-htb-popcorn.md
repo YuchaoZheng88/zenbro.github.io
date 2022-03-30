@@ -3,7 +3,7 @@ title: htb popcorn
 author: Yuchao
 date: 2021-03-15 11:33:00 +0800
 categories: [sec]
-tags: [htb]
+tags: [htb, pam, dirtycow]
 math: true
 mermaid: true
 ---
@@ -19,7 +19,7 @@ nmap -p 22,80 -sC -sV -oA scans/tcpscripts 10.10.10.6
 
 #### Directory discovery
 ```bash
-# asdf
+# directory discover
 gobuster dir -u http://10.10.10.6 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -o scans/gobuster-root-med -t 40
 ```
 - get the path: /test (Status: 200) /index (Status: 200) /torrent (Status: 301) /rename (Status: 301)
