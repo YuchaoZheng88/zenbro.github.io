@@ -158,7 +158,7 @@ The idea here is that there is a command injection in the "function name", will 
 
 how:
 - 1. send user to dashboard by XSS. 
-- In referer header add: <script>document.location="http://127.0.0.1:8080"</script>
+- In referer header add: ``` <script>document.location="http://127.0.0.1:8080"</script> ```
 - 2. command inection in "function name".
 - Test simple wget command first.
 
