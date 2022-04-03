@@ -8,6 +8,8 @@ math: true
 mermaid: true
 ---
 
+Know it`s an php lavarel application behind nginx.
+
 ## Brute force Laravel application pin
 
 #### try type juggling
@@ -15,5 +17,13 @@ mermaid: true
 - application/x-www-form-urlencoded, body is ``` name=admin&pin=1234 ```
 -  application/json, body is ``` {"name":"admin", "pin":true} ``` try type juggling, php == not === vulnarability, but no on this box.
 
-####
+#### fuzz 
+- In type Juggling, we know the php uses ===
+- ``` wfuzz -H 'Cookie:{content}' -H 'Content-Type:application/x-www-form-urlencoded' -u {URL/api/resettoken} -d 'name=admin&pin=FUZZ' -z range,1000-9999 ```
+- response "too many requests"
+- need to bypass rate limit.
+
+#### bypass rate limit
+search website like <https://book.hacktricks.xyz/pentesting-web/rate-limit-bypass>
+
 
