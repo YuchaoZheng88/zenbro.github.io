@@ -26,4 +26,6 @@ Know it`s an php lavarel application behind nginx.
 #### bypass rate limit
 search website like <https://book.hacktricks.xyz/pentesting-web/rate-limit-bypass>
 
+find a way: add ``` X-Forwarded-For: {IP} ``` in the header.
+
 
