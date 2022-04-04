@@ -28,4 +28,19 @@ search website like <https://book.hacktricks.xyz/pentesting-web/rate-limit-bypas
 
 find a way: add ``` X-Forwarded-For: {IP} ``` in the header.
 
+wfuzz with two fuzz positions.
+```bash
+wfuzz -e iterators
+
+# Available iterators:
+
+#   Name    | Summary                                                                           
+# ----------------------------------------------------------------------------------------------
+#   chain   | Returns an iterator returns elements from the first iterable until it is exhaust  
+#           | ed, then proceeds to the next iterable, until all of the iterables are exhausted  
+#           | .                                                                                 
+#   product | Returns an iterator cartesian product of input iterables.                         
+#   zip     | Returns an iterator that aggregates elements from each of the iterables.  
+```
+
 
