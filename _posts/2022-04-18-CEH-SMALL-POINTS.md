@@ -22,13 +22,13 @@ Rogue router: Message authentication to prevent.
 
 Regulation:
 - HIPAA:  Health Insurance Portability and Accountability Act. modernize the flow of healthcare information.
-- FISMA: The Federal Information Security Management Act of 2002.
+- FISMA: The Federal Information Security Management Act of 2002. requires each federal agency
 - ISO/IEC 27002
 - COBIT: Control Objectives for Information and Related Technologies.
 - NIST-800-53: defines security and privacy controls for all U.S. federal information systems except those related to national security
 - PCI-DSS: Payment Card Industry Data Security Standard, handle branded credit cards from the major card schemes.
 - EU Safe Harbor: prevent private organizations store customer data from accidentally disclosing or losing personal information.
-- SOX: Public Company Accounting Reform and Investor Protection Act.
+- SOX: Public Company Accounting Reform and Investor Protection Act. aka Sarbanes–Oxley Act
 - DMCA: Digital Millennium Copyright Act
 - PII: personally identifiable information 
 
@@ -41,8 +41,13 @@ PCI Data Security Standards:
 - Maintain an Information Security Policy
 
 MAC address: 6-byte/ 12-hex/ 48-bit.
+
 MAC filtering
+
 On a wireless network, proper credentials: SSID and password
+- SSID    Name of a Network
+- BSSID  basic service set identifier 
+- ESSID  Extended Service Set Identification
 
 CRLF attack: Carriage Return (ASCII 13, \r) Line Feed (ASCII 10, \n)
 - attackers can set fake cookies, steal CSRF tokens, disclose user information by injecting a script (XSS)
@@ -86,7 +91,7 @@ Payment Card Industry Data Security Standard
 
 Kon-Boot:  allows users to bypass Microsoft Windows and Apple macOS passwords.
 
-Cain & Abel: password recovery tool for Microsoft Windows.
+Cain & Abel: password recovery tool for Microsoft Windows. forge certificates for authentication.
 
 Markov Chains attack: assemble a certain password database
 
@@ -127,8 +132,17 @@ Nmap:
 - -sY: SCTP INIT scan. SCTP is a relatively new alternative to the TCP and UDP protocols
 - -R: reverse DNS resolution on the target IP addresses
 - -r: randomizes the port scan order
+- -D decoy, hide your IP in decoy IPs.
+- -f fragment packets, split up the TCP header over several packets, 
+- -S IP_Address (Spoof source address).
+- -PN dont ping
+- -PU UDP ping
+- -PP ICMP timestamp ping
+- -PY SCTP init ping
 
 Nikto: scanner for web servers for dangerous files/CGIs, outdated server software.
+
+netsparker: security scanner
 
 Layer 4 vs layer 5:
 - Transport layer: establishes a connection between two machines, transmitting segments. TCP.
@@ -153,7 +167,7 @@ TCP Connect/Full Open Scan:
 
 Inverse TCP flag scanning: 
 - include: FIN, XMAS, NULL, URG, PSH
-- open: no response. close: RST.
+- open: no response. close: RST and ACK bits set.
 
 Xmas Scan:
 - sX
@@ -261,6 +275,8 @@ protocol analyzer: a tool used to monitor data traffic and analyze captured sign
 arp cache poisoning: aka arp apoofing. MitM, attacker must access the network.
 - check two different IP addresses that share the same MAC address.
 
+BetterCap: tool for MitM.
+
 ARP cache: a table of IP to MAC. 
 
 Dynamic ARP inspection (DAI): 
@@ -298,9 +314,6 @@ IDS/IPS:
 - AIDS: Anomaly-based intrusion detection system. often with artificial intelligence type techniques.  a high false-positive rate 
 - SIDS: signature-based IDS
 
-- NIDS: Network intrusion detection systems.
-- HIDS: host-based intrusion detection system
-
 Snort rule:
 - ``` alert tcp any 21 -> 10.199.12.8 any (msg:"FTP Packet "; sid:1000010)
 - Rule Header, Rule Option
@@ -316,7 +329,10 @@ Exploit Kits: simply a collection of exploits.
 
 Cloudborne attack: infrastructure-as-a-service (IaaS) attack.  implant backdoor in the firmware
 
-SaaS, PaaS, IaaS.
+SaaS, PaaS, IaaS
+
+Staas - Storage as a Service
+
 
 
 cloud carrier/ auditor/ broker/ consumer
@@ -359,8 +375,10 @@ Boot Sector Virus:
 - copy it self to the original location of the MBR.
 
 Low-bandwidth attacks: nmap`s slow scan.
+
 Session Splicing:  split the attack traffic into many packets such that no single packet triggers the IDS.
 - tools: Nessus,  'Nikto', 'whisker' and 'Sandcat'
+
 Desynchronization Attack: RFID(Radio-frequency identification ) related threat.
 
 - Aircrack-ng: detector, packet sniffer, WEP and WPA/WPA2-PSK cracker and analysis tool for 802.11 wireless LANs
@@ -371,11 +389,20 @@ Desynchronization Attack: RFID(Radio-frequency identification ) related threat.
 802.1x protocol: defines an access control and authentication protocol
 
 WPA: Wi-Fi Protected Access
+
 WPA3-Enterprise: 192-bit cryptographic strength, cryptographic tools to protect sensitive data.
+
 Dragonblood: WPA3 vulnerabilities.
+
 Key reinstallation attack: KRACK, a severe replay attack on WPA2.
 
+KRACK attack: Key Reinstallation Attack, a replay attack. 
+
 WEP: Wired Equivalent Privacy,  mimic the privacy characteristics of a wired LAN,  insecure RC4 cipher
+
+RC4: symmetric stream cipher. 
+
+RC5, RC6: symmetric-key block cipher.
 
 RADIUS: 
 - Remote Authentication Dial-In User Service,  
@@ -406,13 +433,15 @@ DOS:
 - APDoS. advanced persistent DoS.  persist for weeks
 - Smurf. distributed denial-of-service. ICMP. 
 - Yo-yo. aimed at cloud-hosted. attack until a cloud-hosted service scales outwards. when scales back down, the attack resumes,
+- XOIC. a ddos tool.
 
 SQLi Tautology: OR '1' = '1'; --
 
-802.11a: 5 GHz bands, 54 Mbit/s, 
-802.11n: 2.4 GHz / 5 GHz bands, 54 Mbit/s to 600 Mbit/s
-802.11g: 2.4 GHz band, 54 Mbit/s
-802.11i:  specifies security mechanisms for wireless networks
+- 802.11a: 5 GHz bands, 54 Mbit/s
+- 802.11n: 2.4 GHz / 5 GHz bands, 54 Mbit/s to 600 Mbit/s,
+- 802.11g: 2.4 GHz band, 54 Mbit/s, 
+- 802.11i:  specifies security mechanisms for wireless networks
+- 802.16: 1-6 miles.
 
 Bluedriving: wardriving utility. check same devices on map.
 
@@ -441,16 +470,6 @@ Ettercap: a comprehensive suite for man in the middle attacks.
 
 Jamming signal attack. 
 
-KRACK attack: Key Reinstallation Attack, a replay attack
-
-incident handling process phases:
-- 1. Preparation
-- 2. Identification
-- 3. Containment
-- 4. Neutralization
-- 5. Recovery
-- 6. Review
-
 Attack model:
 1. Ciphertext-only attack (COA): access only to a set of ciphertexts, can guess standard protocol data.
 2. Known-plaintext attack:  access to at least a limited number of pairs of plaintext and the corresponding enciphered text.
@@ -477,6 +496,12 @@ Honey pot types:
 - Low-interaction Honeypots.  will not be able to interact with your decoy system in any depth.
 - High interaction honeypots.  emulates certain protocols or services.
 - Research honeypots. gather information about the black hat community. not to a specific organization.
+
+find honey pots:
+- Honeyd Honeypot: perform time-based TCP fingerprinting methods
+- User-Mode Linux (UML) Honeypot: analyze /proc/mounts, /proc/interrupts, and /proc/cmdline, which contain UML-specific information.
+- Sebek-based Honeypots: analyzing the congestion in the network layer 
+- Snort_inline Honeypot: analyzing the outgoing packets
 
 Website defacement vulnerability: commonly carried out by hacktivists.
 
@@ -527,7 +552,7 @@ TCP communication with incrementing sequence number.  create a state where the c
 - UDP session Hijacking
 - <https://www.greycampus.com/opencampus/ethical-hacking/network-or-tcp-session-hijacking?sscid=c1k4_w62kp>
 
-Registration hijacking:  attacker replaces the legitimate registration with a false one. VoIP.
+Registration hijacking:  attacker replaces the legitimate registration with a false one.
 
 DMZ Network: extra layer of security
 
@@ -574,6 +599,16 @@ LoT layers:
 
 FCC ID search: gather information about LoT devices.
 
+LoTSeeker: scan the target network for IoT devices and detect default, factory-set credentials.
+
+Censys: automated monitoring LoT.
+
+Shodan: world’s first search engine for Internet-connected devices.
+
+Bullguard IoT: find if your device is on Shodan.
+
+Power/Clock/Reset Glitching: one type of fault injection attack to IoT device
+
 achieve chip-level security of an IoT device: encypting the JTAG interface.
 
 Prevent sniff attacks: use encryption protocols ("best option")
@@ -582,11 +617,29 @@ Sniffing:
 - active. Sniffing the switch.  bogus MAC address. layer 2
 - passive.  sniffing the hub. layer 1
 
+Unspecified Proxy Activities: configured multiple domains pointing to the same host to switch quickly between the domains and avoid detection
+
+CAM Overflow: context-addressable memory (CAM) table. no more new MAC addresses can be learned. turn switch into a hub.
+
+VLAN hopping attack: 2 methods  switch spoofing and double tagging
+
 email:
 - spoofing.  fabrication of an email header, make the recipient think the email originated from someone else.
 - harvesting. (or scraping ). obtaining lists of email addresses using various methods 
 - masquerading.  broader concept than spoofing, more than just header.
-- phishing.  malicious link
+- phishing.  malicious link.
+
+Evilginx:
+- phishing tool.
+- a man-in-the-middle attack framework used for phishing credentials and session cookies of any web service. 
+
+whaling: phishing, masquerade as a senior one, CEO fraud
+
+Smishing: mobile phones phishing. aka SIM swap scam, SIM splitting, simjacking, SIM swapping
+
+Vishing: voice phishing
+
+Clone phishing: create an almost identical or cloned email, only attachment changed.
 
 Infoga: a tool gathering email accounts information (IP, hostname, country,...) from a different public source
 
@@ -614,8 +667,11 @@ Residual risk = (Inherent risk) – (impact of risk controls)
 - the amount of risk left over after natural or inherent risks have been reduced by risk controls.
 
 WHOIS:  protocol that used for querying databases that store the registered users or assignees of an Internet resource
+
 Internet Assigned Numbers Authority:  a standards organization, oversee global IP allocation /autonomous system /DNS...
+
 CAPTCHA:  "Completely Automated Public Turing test to tell Computers and Humans Apart"
+
 Internet Engineering Task Force: IETF,  standards that comprise the Internet protocol suite (TCP/IP)
 
 ---
@@ -631,14 +687,12 @@ wifi:
 - Wireshark with Airpcap: analyzing packets on your wireless network
 - Wi-Fi Pineapple:  a wireless auditing platform
 
-
-
 some ports:
 - DNS: udp/port 53.
 - NTP: udp/port 123 (Network Time Protocol)
 - CHARGEN: udp,tcp/19 (Character Generator Protocol)
 - XDMCP: udp,tcp/177 (X Display Manager Control Protocol )
-- SNMP: udp,tcp/161 (Simple Network Management Protocol)
+- SNMP: udp,tcp/161 (Simple Network Management Protocol) (version3 has encryption)
 - Server Message Block (SMB): tcp/139 (on NetBIOS) or tcp/445(after windows 2000)
 - LDAP (Lightweight Directory Access Protocol): tcp/389.
 - LDAPS: tcp/636. 
@@ -672,14 +726,12 @@ AOL Search <https://search.aol.com/>: same as google, baidu, duckduckgo.
 zabasearch: Find people, addresses & phone numbers.
 ike-scan: Discover and fingerprint IKE hosts (IPsec VPN Servers)
 
-
-ARIN LOOKUP: 
-- American Registry for Internet Numbers, <https://mxtoolbox.com/arin.aspx>
-- retrieve information like: organization's network range, network topology and operating system used.
-
 Cloud Hopper: APT10
+
 Cloud Hopper attacker:  used MSP's as intermediaries to acquire assets
+
 An advanced persistent threat (APT)
+
 APT lifecycle: ( requires more resources than a standard web application attack)
 - 1. Define target
 - 2. Find and organize accomplices
@@ -712,6 +764,10 @@ DNS spoofing:
 - 2. overloads the DNS with poisoned responses
 - 3. wait legitimate user to query DNS
 
+DNS cache snooping:
+- if the DNS server has a specific DNS record cached
+- deduce if the DNS server's user have recently visited a specific site.
+
 vulnerability assessment solutions:
 - Product-based solutions. in internal network, drawback is no outside view.
 - Service-based solutions. mimics the perspective of a hacker
@@ -739,6 +795,7 @@ SMTP commands:
 - NOOP –  testing to avoid timeouts
 - EXPN – verify the existence of one or more mailboxes
 - StartTLS - use TLS or SSL 
+- VRFY, EXPN used to find valid users, email boxes by hackers.
 
 open mail relay:  an SMTP server that is configured to allow anyone on the Internet to send email through it
 
@@ -758,8 +815,11 @@ DUHK attack:
 - allows attackers to recover secret encryption keys used to secure VPN connections and web browsing sessions.
 
 Pharming: misdirecting users to fraudulent websites, by host or DNS. (Phishing: with bad URL)
+
 Skimming: capture and steal cardholder’s personal payment information.
+
 Pretexting:  social engineering, make story and convince victim to give information.
+
 Wardriving:  physically searching for wireless networks
 
 php.ini: in  'cgi-bin' directory, attackers can find: database logins and passwords and verbose error messages
@@ -797,6 +857,8 @@ DNS:
 - SOA Start of [a zone of] authority record
 - AXFR Authoritative Zone Transfer
 
+IPv6 (and IPSec) allows for header authentication, IPv4 does not.
+
 split-horizon DNS: aka  split-view DNS, split-brain DNS, or split DNS.
 -  first DNS server on the internal network and second DNS in DMZ
 
@@ -811,6 +873,16 @@ EDNS: Extension Mechanisms for DNS,  expanding the size of several parameters of
 
 AndroidManifest.xml: basic configuration in an Android application
 
+DroidSheep: Android application, allow intercept unprotected web-browser sessions using WiFi.
+
+Agent Smith attack: a modular malware that exploits Android vulnerabilities to replace legitimate existing apps with a malicious imitation.
+
+Androrat: Android and RAT. 
+
+DroidDream: malware, Trojan, gain root access to Android
+
+Orbot: Tor on Android
+
 Meet-in-the-middle attack: 
 - space–time tradeoff cryptographic attack
 - the primary reason why Double DES is not used 
@@ -823,7 +895,12 @@ DES: Data Encryption Standard (DES). fixed block size of 64 bits, and a key size
 IDEA: International Data Encryption Algorithm, a symmetric-key block cipher, used in PGP v2.0
 - 64-bit blocks using a 128-bit key and consists of a series of 8 identical transformations
 
+RSA: uses 1,024- and 2,048-bit key strengths as asymmetric encryption algorithms
+
+DSA: Digital Signature Algorithm.
+
 AES: The Advanced Encryption Standard (AES).  fixed block size of 128 bits, and a key size of 128, 192, or 256 bits. symmetric.
+- selected by NIST as the principal method for providing confidentiality after the DES algorithm
 
 HMAC: Hash-based message authentication,  verify both the integrity and authenticity of a message
 
@@ -846,6 +923,10 @@ CAST-128: 64-bit block size,  key size between 40 and 128 bits,
 RC-4:  stream cipher
 
 PGP, SSL, IKE:  public-key cryptography
+
+A web of trust: a concept used in PGP, GnuPG, and other OpenPGP-compatible systems to establish the authenticity of the binding between a public key and its owner. 
+
+GPG: GNU Privacy Guard, free version of PGP ,encrypt and sign your data and communications, hybrid-encryption
 
 PKI:  certification authority (CA)  issues digital certificates
 
@@ -876,6 +957,8 @@ tier vs layer: tier on different infrasturctures.
 
 windows TTL: 128
 
+linux TTL: 64
+
 five-tier container technology architecture:
 - Tier-1: Developer machines
 - Tier-2: Testing and accreditation systems
@@ -896,11 +979,9 @@ Vulnerability Management Life Cycle:
 - Remediate
 - Verify
 
-Agent Smith attack: a modular malware that exploits Android vulnerabilities to replace legitimate existing apps with a malicious imitation.
-
 iOS Trustjacking:  attackers to exploit the iTunes Wi-Fi sync feature
 
-VLAN hopping attack: 2 methods  switch spoofing and double tagging, 
+Trident: a vulnerability, allow espionage of IOS on smartphone.
 
 DNS Tunneling: encodes the data of other programs or protocols in DNS queries and responses, to bypass firewall.
 
@@ -958,6 +1039,12 @@ CHNTPW:
 - on Windows NT, 2000, XP, Vista, 7, 8, 8.1 and 10.
 - by editing SAM database.
 
+windows password:
+- in Security Account Manager (SAM) file at: C:\Windows\system32\config
+
+SAM security identifier:
+- 500.   administrator account (like 0 for root in linux)
+
 PDU on layers:
 1. bit (physical)
 2. frame (datalink)
@@ -990,7 +1077,7 @@ No ABAC validation: No proper attribute-based access control,  allows attackers 
 
 heap spray: put malicious code in different heap(non-executable part) locations, give more chance to hit and execute.
 
-Unspecified Proxy Activities: configured multiple domains pointing to the same host to switch quickly between the domains and avoid detection
+
 
 vendor lock-in problem: customers of a cloud service provider (CSP) cannot easily move to a different vendor without substantial costs or technical incompatibilities
 - 1. Data transfer risk
@@ -999,10 +1086,10 @@ vendor lock-in problem: customers of a cloud service provider (CSP) cannot easil
 - 4. Human resource knowledge risk
 
 types-of-threat-intelligence:
-- Operational Threat Intelligence.   specific threats
-- Strategic Threat Intelligence.        high-level information relating to cyber security posture, threats, details regarding the money impact of various cyber activities
-- Tactical Threat Intelligence.           provides info related to TTPs used by threat actors (attackers) to perform attacks.
-- Technical Threat Intelligence.          includes command and control channels, tools, etc
+- Strategic Threat Intelligence.          long-term, high level.            high level information on changing risks.
+- Tactical Threat Intelligence.            long-term, low level              information on attackers` TTPs.
+- Operational Threat Intelligence.      short-term, high level            information on specific incoming attack.
+- Technical Threat Intelligence.          short-term, low level             Specific IOC(Indicator of compromise )
 
 Key escrow:  key is held in escrow by a third party
 
@@ -1033,3 +1120,89 @@ NetPass.exe:  recovers all network passwords stored on a system for the current 
 Outlook scraper: scrapes names and email addresses from the victim’s Outlook accounts, for future phishing.
 
 Mail PassView: a password recovery tool that reveals passwords and account details for various email clients such as Microsoft Outlook, Windows Mail, Mozilla Thunderbird, Hotmail, Yahoo! Mail, and Gmail and passes them to the credential enumerator module.
+
+incident handling and response process:
+- 1. Preparation
+- 2. Incident recording and assignment
+- 3. Incident triage
+- 4. Eradication
+
+incident handling process phases:
+- 1. Preparation
+- 2. Identification
+- 3. Containment
+- 4. Neutralization
+- 5. Recovery
+- 6. Review
+
+Zero Trust Network Access (ZTNA): providing only the access to services the user has been explicitly granted
+
+``` wget 192.168.0.10 -q -S ```
+- -q will suppress the normal output
+- -S parameter will print the headers sent by the HTTP or FTP server
+- banner grabbing
+
+Kubernetes:
+- Kube-scheduler. master component, scans newly generated pods and allocates a node for them
+- Kube-apiserver. front-end utility
+- Kube-controller-manager.  master component, runs controllers
+- cloud-controller-manager. master component, run controllers that communicate with cloud providers.
+
+Key stretching: make weak key more secure, against brute-force.
+
+Key derivation function (KDF): derives one or more secret keys from a secret value
+
+RIR:
+- RIPE NCC
+- APNIC
+- AFRINIC
+- LACNIC
+- ARIN
+
+ARIN LOOKUP: 
+- American Registry for Internet Numbers, <https://mxtoolbox.com/arin.aspx>
+- retrieve information like: organization's network range, network topology and operating system used.
+
+SCADA: Supervisory control and data acquisition. industrial 
+
+password-cracking: hashcat, john the ripper, ophcrack
+
+Ophcrack: use rainbow table, crack Windows log-in passwords
+
+CeWL: ruby app, spider find url to build wordlist
+
+Hootsuite: gather information from social media
+
+OSINT framework:
+- <https://osintframework.com/>
+- contains a set of the most popular tools that facilitate your tasks of collecting information and data from open sources
+
+Spearphone attack: breaches speech privacy
+
+wash: kali tool, identifying WPS enabled access points
+
+sqlmap: 
+- --dbs Enumerate DBMS databases
+
+Credential stuffing attack:  attacker uses known username/password combinations
+
+ping to death: first in 1996.
+
+Kerberoasting:  
+- send requests using Kerberos with the intent of gathering information about accounts that could be used offline.
+- look like legitimate traffic
+
+---
+
+last123
+
+software firewall
+teardrop
+DNSSEC
+NTP port
+IPSEC layer
+802.11a
+Obfuscation attack
+NIDS
+
+<https://wiki.danielgorbe.com/books/ceh-v10>
