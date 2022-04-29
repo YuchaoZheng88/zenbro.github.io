@@ -32,6 +32,8 @@ Regulation:
 - DMCA: Digital Millennium Copyright Act
 - PII: personally identifiable information 
 
+NIST Cybersecurity Framework`s functions: Identify, Protect, Detect, Respond, Recover
+
 PCI Data Security Standards:
 - Build and Maintain a Secure Network
 - Protect Cardholder Data
@@ -43,11 +45,6 @@ PCI Data Security Standards:
 MAC address: 6-byte/ 12-hex/ 48-bit.
 
 MAC filtering
-
-On a wireless network, proper credentials: SSID and password
-- SSID    Name of a Network
-- BSSID  basic service set identifier 
-- ESSID  Extended Service Set Identification
 
 CRLF attack: Carriage Return (ASCII 13, \r) Line Feed (ASCII 10, \n)
 - attackers can set fake cookies, steal CSRF tokens, disclose user information by injecting a script (XSS)
@@ -91,7 +88,12 @@ Payment Card Industry Data Security Standard
 
 Kon-Boot:  allows users to bypass Microsoft Windows and Apple macOS passwords.
 
-Cain & Abel: password recovery tool for Microsoft Windows. forge certificates for authentication.
+Cain & Abel: 
+- password recovery tool for Microsoft Windows. 
+- forge certificates for authentication.
+- create certificates that are not officially signed by a CA
+
+PAP: Password Authentication Protocol.  a weak authentication protocol. not encrypt any data.
 
 Markov Chains attack: assemble a certain password database
 
@@ -105,10 +107,12 @@ Quantum coin flipping
 Einstein-Podolsky-Rosen (EPR) paradox
 
 Firewall:
-- Application firewall: Internet Relay Chat (IRC) is an application layer protocol.
-- Network-based application firewalls:  can understand FTP, DNS, HTTP.
+- Application firewall: Internet Relay Chat (IRC) is an application layer protocol. Find SQLi, XXS. layer 7
+- Network-based application firewalls:  can understand FTP, DNS, HTTP. check for malware.
 - Host-based application firewalls:  monitors application system calls or other general system communication.
 - multi-homed firewall: a node with multiple NICs that connects to two or more networks.
+- statefull firewall: layer 4
+- Access control list: layer 3 or 4.
 
 testing:
 - Fuzzing testing: Black Box
@@ -139,6 +143,14 @@ Nmap:
 - -PU UDP ping
 - -PP ICMP timestamp ping
 - -PY SCTP init ping
+- -sn disable the port scan
+
+ICMP type code:
+- 0 echo reply (response)
+- 3 Destination unreachable
+- 4 Source quench (deprecated)
+- 5 Redirect
+- 8 echo (request)
 
 Nikto: scanner for web servers for dangerous files/CGIs, outdated server software.
 
@@ -150,6 +162,10 @@ Layer 4 vs layer 5:
 - An application can run many processes simultaneously to accomplish the work of the application.
 
 port: 16-bit, 4-hex, 2-byte
+
+IPv6: 128 bits. 32-hex, 16-byte. (4-times of v4). No broadcast, instead of multicast
+
+IPv4: 32 bits. 8-hex, 4-byte.
 
 SQL injection:
 - Compromised data integrity.
@@ -180,12 +196,13 @@ Null Scan:
 - sN
 - no flag.
 
-FIN scan (-sF): Fin.
+FIN scan (-sF): if open, no response(no previous connection).
 
 The Maimon scan:  sM, FIN/ACK
 - open: no response. close: RST.
 
-Half-open scan: aka  SYN scan. it’s a fast and sneaky.
+Half-open scan: aka  SYN scan. it’s a fast and sneaky. if closed, RST is back. if open, SYN/ACK is back.
+- concern: a lot of half open connections.
 
 Scan:
 - Banner Grabbing: protocol HTTP, FTP, SMTP; tools Telnet, nmap, Netcat. See response banner information about service.
@@ -275,6 +292,8 @@ protocol analyzer: a tool used to monitor data traffic and analyze captured sign
 arp cache poisoning: aka arp apoofing. MitM, attacker must access the network.
 - check two different IP addresses that share the same MAC address.
 
+ARP on network layer. 
+
 BetterCap: tool for MitM.
 
 ARP cache: a table of IP to MAC. 
@@ -309,7 +328,8 @@ msfvenom should be used in place of msfpayload+msfencode: msfencode bypass antiv
 
 IDS/IPS:
 - WIPS: Wireless Intrusion Prevention System
-- HIDS: host-based intrusion detection system. one of the last layers of defense and reside on computer endpoints.
+- HIDS: host-based intrusion detection system. one of the last layers of defense and reside on computer endpoints. signature-based
+detection method
 - NIDS: Network-based intrusion detection system.  at the physical and network layers after it has passed through a firewall. Only packet level analysis, can be bypass by encryption.
 - AIDS: Anomaly-based intrusion detection system. often with artificial intelligence type techniques.  a high false-positive rate 
 - SIDS: signature-based IDS
@@ -323,6 +343,11 @@ Intranet machine to visit Internet:
 - Mediation servers like IRC, Usenet, SMTP and Proxy server
 - Network address translation (NAT)
 - Tunneling protocol
+
+Proxy server: sit in middle between an external network and the private network.
+- Routers and switches don’t sit in the middle, merely passing traffic along based on source and destination addresses.
+
+router: seperate Broadcast domains
 
 Sybil attack: creating a large number of pseudonymous identities. attack distributed hash table (DHT) system.
 Exploit Kits: simply a collection of exploits.
@@ -381,16 +406,15 @@ Session Splicing:  split the attack traffic into many packets such that no singl
 
 Desynchronization Attack: RFID(Radio-frequency identification ) related threat.
 
-- Aircrack-ng: detector, packet sniffer, WEP and WPA/WPA2-PSK cracker and analysis tool for 802.11 wireless LANs
+
 - Metasploit: important sub-projects include the Opcode Database, shellcode archive and related research.
 - Analyst's Notebook:  software product from IBM for data analysis and investigation.
 - Palantir: Palantir Technologies is a public American software company that specializes in big data analytics. 
 
-802.1x protocol: defines an access control and authentication protocol
-
-WPA: Wi-Fi Protected Access
-
-WPA3-Enterprise: 192-bit cryptographic strength, cryptographic tools to protect sensitive data.
+802.1x protocol: 
+- defines an access control and authentication protocol
+- IEEE standard for port-based authentication
+- client authentication in wireless networks, security access
 
 Dragonblood: WPA3 vulnerabilities.
 
@@ -398,7 +422,9 @@ Key reinstallation attack: KRACK, a severe replay attack on WPA2.
 
 KRACK attack: Key Reinstallation Attack, a replay attack. 
 
-WEP: Wired Equivalent Privacy,  mimic the privacy characteristics of a wired LAN,  insecure RC4 cipher
+WEP: Wired Equivalent Privacy,  mimic the privacy characteristics of a wired LAN,  
+- insecure RC4 cipher
+- Initialization Vector (IV) is Too Small
 
 RC4: symmetric stream cipher. 
 
@@ -424,7 +450,7 @@ Scanning: active collection of information.
 Enumeration: active, gather more information.
 
 DOS:
-- Slowloris: tries to keep many connections to the target web server open and hold them open as long as possible
+- Slowloris: tries to keep many connections to the target web server open and hold them open as long as possible. most likely successful
 - HTTP GET/POST (HTTP Flood): 
 - Spoofed Session Flood.  contains multiple SYN and multiple ACK packets along with one or more RST or FIN
 - IP fragmentation scan/attack. Fragmentation is associated with IP; whereas Segmentation is associated with TCP. 
@@ -432,16 +458,12 @@ DOS:
 - Teardrop attack.  attempts to make a computer resource unavailable by flooding a network or server with requests and data
 - APDoS. advanced persistent DoS.  persist for weeks
 - Smurf. distributed denial-of-service. ICMP. 
+- Fraggle attack. distributed denial-of-service. UDP. 
+- bonk attack: sends fragmented UDP packets to a Windows system, may cause the system to crash, DoS
 - Yo-yo. aimed at cloud-hosted. attack until a cloud-hosted service scales outwards. when scales back down, the attack resumes,
 - XOIC. a ddos tool.
 
 SQLi Tautology: OR '1' = '1'; --
-
-- 802.11a: 5 GHz bands, 54 Mbit/s
-- 802.11n: 2.4 GHz / 5 GHz bands, 54 Mbit/s to 600 Mbit/s,
-- 802.11g: 2.4 GHz band, 54 Mbit/s, 
-- 802.11i:  specifies security mechanisms for wireless networks
-- 802.16: 1-6 miles.
 
 Bluedriving: wardriving utility. check same devices on map.
 
@@ -462,6 +484,7 @@ Jailbreaking types: Tethered, Semi-Tethered and Untethered.
 - Tethered Jailbreak:  computer running the jailbreaking software, or the iOS device will not be able to boot at all.  
 - Semi-tethered Jailbreak: can reboot, but will have an unpatched kernel.
 
+patch management: Making determinations about patch disposition for business systems.
 
 aLTEr attack: a fake eNodeB (the 4G cell tower), Man-in-The-Middle (MiTM)
 - <https://alter-attack.net/media/breaking_lte_on_layer_two.pdf>
@@ -497,6 +520,8 @@ Honey pot types:
 - High interaction honeypots.  emulates certain protocols or services.
 - Research honeypots. gather information about the black hat community. not to a specific organization.
 
+fingerprinting: Matching OS characteristics from a scan to a database in Nmap.
+
 find honey pots:
 - Honeyd Honeypot: perform time-based TCP fingerprinting methods
 - User-Mode Linux (UML) Honeypot: analyze /proc/mounts, /proc/interrupts, and /proc/cmdline, which contain UML-specific information.
@@ -525,7 +550,7 @@ recovery:
 IPSec:
 - IPSec: Key exchange, Packet headers and trailers, Authentication, Encryption, Transmission, Decryption. On layer 3 (Network).
 - IPsec driver.  performs protocol-level functions required to encrypt and decrypt packets
-- IKE: Internet Key Exchange, used to set up a security association (SA)
+- IKE: Internet Key Exchange, used to set up a security association (SA), exchange secret keys
 - AH (Authentication Header) protocol. integrity / ESP (Encapsulating Security Payload) protocol. integrity AND confidentiality
 - tunnel mode (gateway-to-gateway) / transport mode (host to host)
 - AH tunnel/ AH trasport/ ESP tunnel/ ESP transport
@@ -557,7 +582,7 @@ Registration hijacking:  attacker replaces the legitimate registration with a fa
 DMZ Network: extra layer of security
 
 on application layer protocol:
-- SFTP: FTP over SSH (Secure Shell),  port 21,
+- SFTP: FTP over SSH (Secure Shell),  port 22,
 - FTPS: FTP-SSL. (adds support for the Transport Layer Security (TLS), SSL is now prohibited)
 - SSL:  Secure Sockets Layer
 
@@ -570,7 +595,7 @@ access-list 102 deny tcp any any eq ftp-data
 access-list 102 permit ip any any
 ```
 
-FTP vs HTTP: FTP file transfer, HTTP website access.
+FTP vs HTTP: FTP file transfer, HTTP website access. Both on application layer.
 
 protocol:
 - PPP: Point-to-Point Protocol, layer-2, between two routers directly without any host
@@ -586,7 +611,9 @@ Malware detection:
 - Heuristics-based detection: might look for rare instructions or junk code; without an exact signature match.
 - Real-time protection
 
-Hit-list scanning:  a list of vulnerable hosts can be composed in advance and sent along with the worm
+Hit-list scanning: a list of vulnerable hosts can be composed in advance and sent along with the worm
+
+worm: does not need a host or human interaction to disrupt and corrupt data
 
 IDOR: (Insecure direct object references )
 - ``` https://insecure-website.com/customer_account?customer_number=132355 ```
@@ -619,15 +646,19 @@ Sniffing:
 
 Unspecified Proxy Activities: configured multiple domains pointing to the same host to switch quickly between the domains and avoid detection
 
+CAM table: 
+- aka content-addressable memory table
+- contains a list of MAC addresses that are associated with a port on a layer 2 switching device
+
 CAM Overflow: context-addressable memory (CAM) table. no more new MAC addresses can be learned. turn switch into a hub.
 
 VLAN hopping attack: 2 methods  switch spoofing and double tagging
 
 email:
 - spoofing.  fabrication of an email header, make the recipient think the email originated from someone else.
-- harvesting. (or scraping ). obtaining lists of email addresses using various methods 
+- harvesting. (or scraping ). obtaining lists of email addresses using various methods. open-source tool: theHarvester.
 - masquerading.  broader concept than spoofing, more than just header.
-- phishing.  malicious link.
+- phishing.  malicious link to many people. spear phishing to specific people.
 
 Evilginx:
 - phishing tool.
@@ -674,11 +705,35 @@ CAPTCHA:  "Completely Automated Public Turing test to tell Computers and Humans 
 
 Internet Engineering Task Force: IETF,  standards that comprise the Internet protocol suite (TCP/IP)
 
----
+Wireless networks two types:
+- ad hoc.  peer to peer. (mesh topology)
+- infrastructure.  an access point that all devices connect to (star topology)
+
 Wireless Network:
 - The SSID (service set identifier): make your network visible and easily accessible.
 - Invisible wifi: disable SSID, connect by configure their settings manually by including the network name, security mode, and other relevant info.
 -  NetStumbler or Kismet can easily locate hidden networks.
+
+- 802.11a: 5 GHz bands, 54 Mbit/s
+- 802.11n: 2.4 GHz / 5 GHz bands, 54 Mbit/s to 600 Mbit/s,
+- 802.11g: 2.4 GHz band, 54 Mbit/s, 
+- 802.11i:  specifies security mechanisms for wireless networks
+- 802.16: 1-6 miles.
+
+On a wireless network, proper credentials: SSID and password
+- SSID    Name of a Network
+- BSSID  basic service set identifier 
+- ESSID  Extended Service Set Identification
+
+WPA: Wi-Fi Protected Access
+
+WPA2: 
+- use 4 way handshake to protect against replay attacks.
+- use CCMP as authentication protocol
+
+WPA3-Enterprise: 192-bit cryptographic strength, cryptographic tools to protect sensitive data.
+
+- Aircrack-ng: detector, packet sniffer, WEP and WPA/WPA2-PSK cracker and analysis tool for 802.11 wireless LANs
 
 Zig-Bee: short-range wireless.
 
@@ -687,22 +742,31 @@ wifi:
 - Wireshark with Airpcap: analyzing packets on your wireless network
 - Wi-Fi Pineapple:  a wireless auditing platform
 
+Wardriving:  physically searching for wireless networks
+
+packet sniffers:
+- tshark (can specify the individual fields you want printed in the output)
+- tcpdump (can not specity individual fields)
+- Snoop (can not specity individual fields)
+
 some ports:
+- FTP: tcp/21(command), tcp/20(data).
+- SSH: tcp/22
+- Telnet: tcp/23
+- SMTP: tcp/25.
 - DNS: udp/port 53.
+- POP3: tcp/110.
 - NTP: udp/port 123 (Network Time Protocol)
 - CHARGEN: udp,tcp/19 (Character Generator Protocol)
 - XDMCP: udp,tcp/177 (X Display Manager Control Protocol )
 - SNMP: udp,tcp/161 (Simple Network Management Protocol) (version3 has encryption)
 - Server Message Block (SMB): tcp/139 (on NetBIOS) or tcp/445(after windows 2000)
-- LDAP (Lightweight Directory Access Protocol): tcp/389.
+- LDAP : tcp/389. (Lightweight Directory Access Protocol)
 - LDAPS: tcp/636. 
-- Telnet: tcp/23
-- POP3: tcp/110.
-- SMTP: tcp/25.
-- FTP: tcp/21, tcp/20.
 - kiwi syslog:  tcp/514.
 - printer: tcp/515.
-- Border Gateway Protocol (BGP): tcp/179
+- BGP: tcp/179 (Border Gateway Protocol)
+- IMAP: tcp/143, Internet Message Access Protocol
 - Service Location Protocol (SLP)
 
 SNMP:
@@ -713,14 +777,23 @@ SNMP:
 NetBIOS:
 - Network Basic Input Output System
 - Enumeration: list computers, shared resources
+- nbtstat: gather NetBIOS configurations information on Windows
 
 JXplorers: query remote LDAP servers, to gather information
+
+LDAP:  implementation of X.500. X.509
 
 LDAP Enumeration Countermeasures:
 - use SSL or STARTTLS
 - enable account lockout
 - Restrict access to Active Directory by using software such as Citrix.
 - Use NTLM.  Windows New Technology LAN Manager.  security protocols by Microsoft to authenticate users' identity
+
+X.509: 
+- standard describes what and how certificates are created. 
+- public key cryptography.
+- is the specification for a certificate
+- organizational unit(OU) is a field in a certificate specified in X.509
 
 AOL Search <https://search.aol.com/>: same as google, baidu, duckduckgo.
 zabasearch: Find people, addresses & phone numbers.
@@ -820,8 +893,6 @@ Skimming: capture and steal cardholder’s personal payment information.
 
 Pretexting:  social engineering, make story and convince victim to give information.
 
-Wardriving:  physically searching for wireless networks
-
 php.ini: in  'cgi-bin' directory, attackers can find: database logins and passwords and verbose error messages
 
 CVSS Score: (4,7,9)
@@ -842,6 +913,8 @@ STP attack: The Spanning Tree Protocol(STP), the lowest bridge priority means th
 
 hping:
 - ``` hping3 -1 {targetIP} ``` ICMP scan
+- allows you to create packets effectively from scratch
+- set specific individual fields
 
 Bluto: 
 - Python-based tool for 
@@ -897,10 +970,11 @@ IDEA: International Data Encryption Algorithm, a symmetric-key block cipher, use
 
 RSA: uses 1,024- and 2,048-bit key strengths as asymmetric encryption algorithms
 
-DSA: Digital Signature Algorithm.
+DSA: Digital Signature Algorithm. compares two hash values in order to provide non-repudiation.
 
 AES: The Advanced Encryption Standard (AES).  fixed block size of 128 bits, and a key size of 128, 192, or 256 bits. symmetric.
 - selected by NIST as the principal method for providing confidentiality after the DES algorithm
+- Rijdael: algorithm name selected.
 
 HMAC: Hash-based message authentication,  verify both the integrity and authenticity of a message
 
@@ -923,6 +997,8 @@ CAST-128: 64-bit block size,  key size between 40 and 128 bits,
 RC-4:  stream cipher
 
 PGP, SSL, IKE:  public-key cryptography
+
+PGP: Pretty Good Privacy, Phil Zimmerman create.
 
 A web of trust: a concept used in PGP, GnuPG, and other OpenPGP-compatible systems to establish the authenticity of the binding between a public key and its owner. 
 
@@ -1016,7 +1092,11 @@ Application Shimming: transparently intercepts API calls and changes the argumen
 
 Launch Daemon: Adversaries install a new launch daemon execute at startup.
 
-Single sign-on (SSO):  login once and access services without re-entering authentication factors
+Single sign-on (SSO):  
+- login once and access services without re-entering authentication factors
+- disadvantage: a single point of failure for authentication.
+
+SESAME: used for single sign-on.
 
 SOA: Service-oriented architecture.  can be accessed remotely
 
@@ -1040,7 +1120,8 @@ CHNTPW:
 - by editing SAM database.
 
 windows password:
-- in Security Account Manager (SAM) file at: C:\Windows\system32\config
+- in Security Account Manager (SAM) file at: 
+- C:\Windows\system32\config
 
 SAM security identifier:
 - 500.   administrator account (like 0 for root in linux)
@@ -1049,7 +1130,7 @@ PDU on layers:
 1. bit (physical)
 2. frame (datalink)
 3. packet (network)
-4. segment (transport)
+4. segment(TCP) or datagram(UDP) (transport)
 5. data(layer5-layer7) (application)
 
 Rules of engagement (ROE): describes the specifics of the testing, the associated violations and essentially protects both the organization's interest and third-party penetration tester
@@ -1076,8 +1157,7 @@ Cryptanalysis:
 No ABAC validation: No proper attribute-based access control,  allows attackers to gain unauthorized access to API 
 
 heap spray: put malicious code in different heap(non-executable part) locations, give more chance to hit and execute.
-
-
+- may not allow for remote code execution.
 
 vendor lock-in problem: customers of a cloud service provider (CSP) cannot easily move to a different vendor without substantial costs or technical incompatibilities
 - 1. Data transfer risk
@@ -1091,7 +1171,9 @@ types-of-threat-intelligence:
 - Operational Threat Intelligence.      short-term, high level            information on specific incoming attack.
 - Technical Threat Intelligence.          short-term, low level             Specific IOC(Indicator of compromise )
 
-Key escrow:  key is held in escrow by a third party
+Key escrow:  
+- key is held in escrow by a third party
+- hold certificates and keys in case the primary keys or certificates are unavailable
 
 Key whitening:  It consists of steps that combine the data with portions of the key.
 
@@ -1110,6 +1192,8 @@ unuseful knowledge:
 - AT&T USM Anywhere: centralizes security monitoring of networks and devices in the cloud, on-premises,  in remote locations
 - Saleae Logic Analyzer:  record and display signals in your circuit to debug it fast.
 - Cisco ASA:  hardware firewalls developed by Cisco Systems
+
+Cisco SPAN port: on a Cisco switch, Switched Port Analyzer. gather traffic
 
 Credential enumerator: 
 - a self-extracting RAR file (containing bypass and service components), 
@@ -1188,9 +1272,60 @@ Credential stuffing attack:  attacker uses known username/password combinations
 
 ping to death: first in 1996.
 
+kerberos: allow workstations to authenticate against remote services
+
 Kerberoasting:  
 - send requests using Kerberos with the intent of gathering information about accounts that could be used offline.
 - look like legitimate traffic
+
+``` net view /domain:<domain_name> ```
+- show all the systems within the domain
+
+/var/log/lastlog: the activities of the last user that signed in
+
+CPU instruction:
+- 0x90 NOP
+- 0x99 ADD
+- 0x91 COPY
+
+UDP datagram payload: 65,535 - 8(header) - 20(IP header) = 65507(payload size)
+
+- shared responsibility model: determines who has responsibility for what aspects of a service with a cloud services provider. 
+- Bell-LaPadula: data classification and management
+- Carnegie Mellon Maturity Model: aka Capability Maturity Model. assess maturity, especially within software development organizations.
+
+IANA: Internet Assigned Numbers Authority
+
+- administrative control: aka soft control. like Security policy.
+- technical control: like access control list.
+- physical control: mantrap, biometric device
+
+MegaPing: Windows GUI tool, do ping sweeps and port scans
+
+EternalBlue: takes advantage of a vulnerability in the Server Message Block protocol
+
+Clean desk policy: clean off their desk, empty trash, shred sensitive documents
+
+- local area network: rooms
+- metropolitan area network: buildings, city blocks
+- wide area network: countries, states
+
+RFC 1918: non-routable IP addresses. 10.0.0.0–10.255.255.255, 172.16.0.0–172.31.255.255, and 192.168.0.0–192.168.255.255
+
+Defensible network architecture: includes the ability to isolate systems and detect attacks and may also include preventive measures
+
+EDGAR: 
+- Electronic Data Gathering, Analysis, and Retrieval, 
+- financial information about a company, including financial reports
+
+The crossover error rate (CER) 
+- is the point at which the FRR(false reject rate) and the FAR(false acceptance rate) intersect.
+- meaning set at an optimal setting for authenticating subject
+
+windows hide file: attrib +h <filename>
+
+- disassembly: opcodes to assembly language, lower level
+- Decompilation: compiled program to source code, higher level
 
 ---
 
