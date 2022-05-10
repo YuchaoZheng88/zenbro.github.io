@@ -51,11 +51,14 @@ TrackingId=xyz' AND (SELECT SUBSTRING(password,1,1) FROM users WHERE username='a
 - ``` <script> alert(1) </script>```
 
 #### dom based
-- as the input writes out to the page, by using document.write function by site.
 - search "asdf"
+- as the input writes out to the html page, by using document.write function by site.
 ```
 <img src="/resources/images/tracker.gif?searchTerms=asdf">
+```
+- change the input as 
 
+```
 <img src="/resources/images/tracker.gif?searchTerms=asdf" <svg="" onload="alert(1)">
 ```
 
