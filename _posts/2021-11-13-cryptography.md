@@ -1,7 +1,7 @@
 ---
 title: cryptography
 author: Yuchao
-date: 2021-11-13 11:33:00 +0800
+date: 2022-05-15 11:33:00 +0800
 categories: [sec]
 tags: [cryptography]
 math: true
@@ -97,6 +97,30 @@ echo $x
 - B send A: 1. g^y mod p, and 2. secret message.
 
 #### RSA
+
+Euler`s Theorem
+- Φ(n): number of positive integer up to n, that are relatively prime to n.
+- Φ(p) = p-1, if p is prime.
+- Φ(m*n) = Φ(m) * Φ(n), if m,n are co-prime.
+- Φ(p*q) = (p-1)*(q-1), if p,q are prime.
+- a^Φ(n) = 1 (mod n), if a,n are co-prime.
+
+Example
+- 4^100003 mod 33 = ?
+- Φ(33) = 2*10 = 20
+- 4^20 mod 33 = 1
+
+Extended Euclidean Algorithm
+- if a*x + b*y = gcd(a,b) = 1
+- then a*x = 1 (mod b)
+- x is the inverse of a, in mod b.
+- public key, private key, inverse each other.
+
+key Generation
+- 2 prime number: p, q
+- 
+
+
 
 
 # PKI
