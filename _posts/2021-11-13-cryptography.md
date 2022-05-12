@@ -98,6 +98,9 @@ echo $x
 
 #### RSA
 
+n = p*q, RSA based on: if know n, can not find p and q.
+
+
 Euler`s Theorem
 - Φ(n): number of positive integer up to n, that are relatively prime to n.
 - Φ(p) = p-1, if p is prime.
@@ -116,12 +119,145 @@ Extended Euclidean Algorithm
 - x is the inverse of a, in mod b.
 - public key, private key, inverse each other.
 
-key Generation
-- 2 prime number: p, q
-- 
+RSA Algorithm
+- find e, a prime. mostly 65537. as public key
+- find 2 large prime number: p, q. n=p*q. e and Φ(n) are co-prime.
+- find d, e*d = 1 mod Φ(n), d as secret key.
+- if know p,q, can easily find d; if only know n, very difficult.
+- Message ^ e (mod n) = Cryptedtext.
+- e, n are public.
+- p, q, Φ(n), d are secret.
+- Cryptedtext ^ d (mod n) = Message.
+
+why
+- a is M encrypt then decrypt.
+- a= M^(ed) mod n
+- ed = k * Φ(n) + 1
+- a= M ^ (k * Φ(n)) * M mod n
+- as M ^ Φ(n) = 1 mod n
+- a = M
+
+note
+- message can not be longer than n.
+
+openssl and RSA
+- generate RSA keys, encrypted by aes128 and encoded by base64
+- ``` openssl genrsa -aes128 -out private.pem 1024 ```
+- view private key
+- ``` openssl rsa -in private.pem -noout -text ```
+- get public key
+- ``` openssl rsa -in private.pem -pubout > public.pem ```
+- view public key
+- ``` openssl rsa -in public.epm -pubin -text -noout ```
+- encrypt msg.txt to msg.enc
+- ``` openssl rsautl -encrypt -inkey public.pem -pubin -in msg.txt -out msg.enc ```
+- decrypt
+- ``` openssl rsautl -decrypt -inkey private.pem -in msg.enc ```
+
+strength
+- 1024-bit RSA keys = 80-bit symmetric keys
+- 2048-bit RSA keys = 112-bit symmetric keys
+- 3072-bit RSA keys = 128-bit symmetric keys
+
+test speed
+- ``` openssl speed rsa ```
+- ``` openssl speed aes-128-cbc ```
+
+#### RSA padding
+- like IV in symmtric encryption.
+- ``` openssl rsautl -encrypt... -pkcs ``` use PKCS padding (default)
+- ``` openssl rsautl -decrypt... -raw ``` see the padding information
+- better and secure padding, oaep
+- ``` openssl rsautl -encrypt... -oaep ```
 
 
+#### Digital Signature
+- ``` openssl sha256 -binary msg.txt > msg.sha256 ```
+- ``` openssl rsautl -sign -inkey private.pem -in msg.sha256 -out msg.sig ```
+- ``` openssl rsautl -verify -inkey public.pem -in msg.sig -pubin -raw | xxd ```
 
+#### program
+cryptography library
+- <https://cryptography.io/en/latest/>
+
+
+Usage
+- Key Generation
+```python
+#!/usr/bin/python3
+
+from Crypto.PublicKey import RSA
+
+key = RSA.generate(2048) # key length
+pem = key.export_key(format='PEM', passphrase='ddd')
+f = open('private.pem', 'wb')
+f.write(pem)
+f.close()
+
+pub = key.publickey()
+pub_pem = pub.export_key(format='PEM')
+f = open('public.pem', 'wb')
+f.write(pub_pem)
+f.close()
+```
+- Encryption
+```python
+#!/usr/bin/python3
+
+from Crypto.Cipher imprt PKCS1_OAEP
+from Crypto.PublicKey import RSA
+
+message = b'a secret message\n'
+
+key = RSA.importKey(open('public.pem').read())
+cipher = PKCS1_OAEP.new(key)
+ciphertext = cipher.encrypt(messagge)
+f = open('ciphertext.bin', 'wb')
+f.write(ciphertext)
+f.close()
+```
+- Decryption
+```python
+#!/usr/bin/python3
+
+from Crypto.Cipher imprt PKCS1_OAEP
+from Crypto.PublicKey import RSA
+
+ciphertext = open('ciphertext.bin', 'rb').read()
+prikey_pem = open('private.pem').read()
+prikey = RSA.importKey(prikey_pem, passphrase='ddd')
+cipher = PKCS1_OAEP.new(prikey)
+message = cipher.decrypt(ciphertext)
+print(message)
+```
+- Sign
+```phtyon
+# Probabilistic Signature Scheme (PSS) 
+from Crypto.Signature import pss
+from Crypto.Hash import SHA256
+from Crypto.PublicKey import RSA
+
+message = b'this is a message'
+key_pem = open('private.pem').read()
+key = RSA.import_key(key_pem, passphrase='ddd')
+h = SHA256.new(message)
+signer = pss.new(key)
+signature = signer.sign(h)
+open('signature.bin', 'wb').write(signature)
+```
+- Verify
+```python
+message = b'this is a message'
+signature = open('signature.bin', 'rb').read()
+key = RSA.import_key(open('public.pem').read())
+h = SHA256.new(message)
+verifier = pss.new(key)
+try:
+	verifier.verify(h, signature)
+	print('valid')
+except (ValueError, TypeError):
+	print('Not Valid')
+```
 
 # PKI
 
