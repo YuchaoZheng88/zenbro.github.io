@@ -183,6 +183,7 @@ cryptography library
 
 Usage
 - Key Generation
+
 ```python
 #!/usr/bin/python3
 
@@ -200,7 +201,10 @@ f = open('public.pem', 'wb')
 f.write(pub_pem)
 f.close()
 ```
+
+
 - Encryption
+
 ```python
 #!/usr/bin/python3
 
@@ -216,7 +220,9 @@ f = open('ciphertext.bin', 'wb')
 f.write(ciphertext)
 f.close()
 ```
+
 - Decryption
+
 ```python
 #!/usr/bin/python3
 
@@ -230,7 +236,9 @@ cipher = PKCS1_OAEP.new(prikey)
 message = cipher.decrypt(ciphertext)
 print(message)
 ```
+
 - Sign
+
 ```phtyon
 # Probabilistic Signature Scheme (PSS) 
 from Crypto.Signature import pss
@@ -245,7 +253,9 @@ signer = pss.new(key)
 signature = signer.sign(h)
 open('signature.bin', 'wb').write(signature)
 ```
+
 - Verify
+
 ```python
 message = b'this is a message'
 signature = open('signature.bin', 'rb').read()
@@ -261,6 +271,75 @@ except (ValueError, TypeError):
 
 # PKI
 
+``` openssl s_client -help ```
+
+
+``` openssl s_client -showcerts -connect www.paypal.com:443 ```
+- show paypal`s certificate
+- return paypal`s certificate, and intermidia CA signs paypal`s certificate
+
+
+copy paypal`s certificate to paypal.pem
+
+
+see plain text description of the certificate
+``` openssl x509 -in paypal.pem -text -noout ```
+
+show certs on system
+``` cd /etc/ssl/certs ```
+
+check DigiCert_High_Assurance_EV_Root_CA.pem in plain text, its self-signed.
+
+
+#### Revoking
+- CRL: Certificate Revocation List
+- OCSP: Online Certificate Status Protocol
+
+#### become a CA
+- <https://www.udemy.com/course/du-cryptography/learn/lecture/31600238#overview>
+
+#### Apache
+- /etc/apache2/sites-available/bank32_apache_ssl.conf
+
+```
+<VirtualHost *:443>
+	DocumentRoot /var/www/bank32
+	ServerName www.bank32.com
+	SSLEngine On
+	SSLCertificateFile /certs/bank32.crt
+	SSLCertificateKeyFile /certs/bank32.key
+</VirtualHost>
+```
+- bank32.crt contain information of CAs, in a list(if many level)
+- ban32.key contain private key.
+
+#### certificate
+- include: ID, PK, Sig.
+
+#### MITM proxy
+- trusted man in the middle.
+
+#### attack on PKI
+attack surface:
+1. Approve
+2. Certificate
+3. Verify
+4. Confirm
+
+case:
+- Comodo Breach
+- DigiNotar
+
+
 # TLS
+
+#### TLS HandShake
+
+#### TLS Data Transmission
+
+#### TLS program
+
+#### TLK Proxy
+
 
 # Bitcoin
