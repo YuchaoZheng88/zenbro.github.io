@@ -239,7 +239,7 @@ print(message)
 
 - Sign
 
-```phtyon
+```python
 # Probabilistic Signature Scheme (PSS) 
 from Crypto.Signature import pss
 from Crypto.Hash import SHA256
