@@ -333,13 +333,140 @@ case:
 
 # TLS
 
+TLS Layer sits between Application and Transport layer.
+
+TLS sub protocols: #6
+
 #### TLS HandShake
+Key Exchange + Authentication
+- 1. create TCP connection, first.
+- 2. create TLS HandShake. TLS message may be combined in one TCP packet.
+
+TLS 1.3 difference
+- eliminate RSA
+- Ephemeral Diffie-Hellman is only choice.(Perfect Forward Secrecy)
+- one less run of communication, improve perfomance. 
 
 #### TLS Data Transmission
+send data over TLS
+- 1. Get data from application
+- 2. Fragment data to blocks.
+- 3. Compress data block. (optional)
+- 4. data block + MAC + Padding.
+- 5. Encrypt 4.
+- 6. TLS Header + Encrypted Data.
+- 7. send to TCP Stream with: TLS Header + Encrypted Data + TLS Header + Encrypted Data
+
+
+TLS Record
+- ContentType + Version + Length + Encrypted Data + MAC + Padding
+
+Receiving Data Over TLS
+- 1. TCP Buffer.
+- 2. TLS Buffer.
+- 3. Get m bytes.
 
 #### TLS program
 
-#### TLK Proxy
+TLS Client
+
+```python
+# client.py
+
+import socket
+import ssl
+import sys
+import pprint
+
+hostname = sys.argv[1]
+port = 443
+cadir = '/etc/ssl/certs'
+
+# Set up TLS context
+# context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)   # TLS 1.2
+context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT) # 1.3
+
+context.load_verify_locations(capath=cadir) # where to find trusted certificate
+context.verify_mode = ssl.CERT_REQUIRED
+
+# hostname if as in certificate , in case DNS redirect and MitM. Many forget it.
+context.check_hostname = True 
 
 
-# Bitcoin
+# Create TCP connection
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.connect((hostname, port))
+input("TCP connected, press to continue")
+
+# Add the TLS
+ssock = context.wrap_socket(sock, server_hostname=hostname, do_handshake_on_connect=False) # tell TLS which TCP to use, not do handshake automaticly
+ssock.do_handshake()  # do handshake manually
+print("=== Cipher used: {}".format(ssock.cipher()))
+print("=== Server hostname: {}".format(ssock.server_hostname))
+print("=== Server certificate: ")
+pprint.pprint(ssock.getpeercert())
+pprint.pprint(context.get_ca_certs())
+input("After TLS handshake, Press to continue")
+
+# Send HTTP request
+request = b"GET / HTTP/1.0\r\nHost: “ + hostname.encode('utf-8') + b"\r\n\r\n"
+ssock.sendall(request)
+
+# Get HTTP response
+response = sock.recv(2048)
+while response:
+	pprint.pprint(response.split(b"\r\n"))
+	print('--------------------')
+	response = ssock.recv(2048)
+
+
+# Close TLS connection
+ssock.shutdown(socket.SHUT_RDWR)
+ssock.close()
+```
+
+
+TLS Server
+
+```python
+# server.py
+
+html = """
+HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n
+<!DOCTYPE html><html><body><h1>This is website!</h1></body></html>
+"""
+
+SERVER_CERT     = './server-certs/mycert.crt'
+SERVER_PRIVATE = './server-certs/mycert.key'
+
+context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+context.load_cert_chain(SERVER_CERT, SERVER_PRIVATE)
+
+# create tcp server
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
+sock.bind(('0.0.0.0', 443))
+sock.listen(5)
+
+while True:
+	newsock, fromaddr = sock.accept()
+	try:
+		ssock = context.wrap_socket(newsock, server_side=True)
+		print('TLS connection established')
+		data = ssock.recv(1024)                           # Read data over TLS
+		pprint.pprint("Request: {}".format(datat))    # Send data over TLS
+		ssock.sendall(html.encode('utf-8'))
+		
+		# close TLS connection
+		ssock.shutdown(socket.SHUT_PDWR)
+		ssock.close()
+```
+
+
+#### TLS Proxy
+
+Client should trust proxy`s root CA.
+1. Proxy Server sign a root CA
+2. The CA is trusted by client.
+3. Client talk to google(for example), it talks to Proxy.
+4. The proxy gives client the google certificate, generate as client needed.
+5. Client think proxy is google, then proxy talks real google.
