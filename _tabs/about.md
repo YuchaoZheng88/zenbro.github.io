@@ -4,12 +4,15 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-## TryHackMe account
+
+---
+
+# TryHackMe account
 <script src="https://tryhackme.com/badge/836492"></script>
 
 ---
 
-## Some useful online course
+# Some useful online course
 
 #### THM penetration test learning path
 ![jrpentest](/jrpen.png){: width="250" }
@@ -28,3 +31,5 @@ order: 4
 
 #### Web Security
 ![websec](/wenliangwebsecurity.jpg){: width="250" }
+
+---
