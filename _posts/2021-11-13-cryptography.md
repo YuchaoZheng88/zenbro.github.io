@@ -69,7 +69,7 @@ echo $x
  
 
 #### MAC: Hash Length Extension Attack.
-- Hash( K || S+MS) = Hash ( Hash( K || S) + MS )
+- ``` Hash( K || S+MS) = Hash ( Hash( K || S) + MS ) ```
 - so we can add Malicious String behind.
 
 
