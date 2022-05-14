@@ -13,7 +13,7 @@ mermaid: true
 #### cheetsheet
 <https://portswigger.net/web-security/sql-injection/cheat-sheet>
 
-```sql
+```
 '+OR+1=1--
 '+UNION+SELECT+NULL,NULL--
 
