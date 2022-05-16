@@ -123,6 +123,7 @@ Possible values:
 ---
 
 AngularJS expression
+
 ```
 {{$on.constructor('alert(1)')()}}
 ```
