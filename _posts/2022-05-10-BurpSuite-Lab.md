@@ -130,6 +130,7 @@ AngularJS expression
 ---
 
 Reflected DOM XSS
+- reflected in json format
 ```javascript
 {"results":[],"searchTerm":"asd"}
 ```
@@ -137,5 +138,7 @@ search: ``` \"-alert(1)}// ```
 ```javascript
 {"results":[],"searchTerm":"\\"-alert(1)}//"}
 ```
-- note: '\' can not be interpretered alone, so if only one \ will be error in json.
-- in this case \" is used as "
+- note:  ``` \ ``` can not be interpretered alone, so if only one \ will be error in json.
+- ``` a = {"results":[],"searchTerm":"\\\"} ``` Error
+- ``` a = {"results":[],"searchTerm":"\\\\"} ``` Good
+- An arithmetic operator (in this case the subtraction operator) is then used to separate the expressions before the alert() function is called.
