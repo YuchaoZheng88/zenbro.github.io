@@ -124,9 +124,7 @@ Possible values:
 
 AngularJS expression
 
-```txt
 {{$on.constructor('alert(1)')()}}
-```
 
 ---
 
