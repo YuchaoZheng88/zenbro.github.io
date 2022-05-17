@@ -7,12 +7,12 @@ order: 4
 
 ---
 
-# TryHackMe
+# TRYHACKME
 <script src="https://tryhackme.com/badge/836492"></script>
 
 ---
 
-# Courses
+# COURSES
 
 #### THM PenTest
 ![jrpentest](/jrpen.png){: width="250" }
@@ -31,5 +31,10 @@ order: 4
 
 #### Pre Security
 ![presec](/presec.png){: width="250" }
+
+---
+
+# COFFEE
+![coffee](/coffee.jpg){: width="250" }
 
 ---
