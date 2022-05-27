@@ -124,7 +124,9 @@ Possible values:
 
 AngularJS expression
 
+```
 {{$on.constructor('alert(1)')()}}
+```
 
 ---
 
@@ -141,3 +143,73 @@ search: ``` \"-alert(1)}// ```
 - ``` a = {"results":[],"searchTerm":"\\\"} ``` Error
 - ``` a = {"results":[],"searchTerm":"\\\\"} ``` Good
 - An arithmetic operator (in this case the subtraction operator) is then used to separate the expressions before the alert() function is called.
+
+---
+
+# Cross-site request forgery (CSRF)
+
+#### CSRF PoC Generator
+- online tool(search one) <https://github.com/merttasci/csrf-poc-generator>
+- or Burp Professional -> Engagement tools: Generate CSRF PoC. -> options: Include auto-submit script.
+- online tools can not change the &# format.
+- HTML character set <https://www.w3.org/MarkUp/html-spec/html-spec_13.html>
+- ``` &#64; ``` as @
+- ``` &#46; ``` as .
+- ``` <script>  document.forms[0].submit();  </script> ``` auto submit the CSRF
+
+#### change Request method
+Change from POST to GET,  may avoid csrf token check.
+
+# Clickjacking
+
+# DOM-based vulnerabilities
+
+# Cross-origin resource sharing (CORS)
+
+
+# XML external entity (XXE) injection
+
+
+# Server-side request forgery (SSRF)
+
+
+# HTTP request smuggling
+
+
+# OS command injection
+
+
+# Server-side template injection
+
+
+# Directory traversal
+
+
+# Access control vulnerabilities
+
+
+# Authentication
+
+
+# WebSockets
+
+
+# Web cache poisoning
+
+
+# Insecure deserialization
+
+
+# Information disclosure
+
+
+# Business logic vulnerabilities
+
+
+# HTTP Host header attacks
+
+
+# OAuth authentication
+
+
+# File upload vulnerabilities
