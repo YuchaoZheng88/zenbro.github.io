@@ -69,6 +69,7 @@ GET /%0d%0aSet-Cookie:CRLFInjection=PreritPathak HTTP/1.1
 - was a collection of tools that enabled administrative access to a computer or network
 - now provides root-level, privileged access while hiding
 - Sensitive data stolen, Malware infection, File removal, Eavesdropping, Remote control
+- impacted Ring 0
 
 
 # type of rootkit
@@ -147,9 +148,16 @@ protect email at Presentaion layer.
 - Network-based application firewalls:  can understand FTP, DNS, HTTP. check for malware.
 - Host-based application firewalls:  monitors application system calls or other general system communication.
 - multi-homed firewall: a node with multiple NICs that connects to two or more networks.
-- statefull firewall: layer 4
+- stateful firewall: layer 4
 - Access control list: layer 3 or 4.
 
+# Stateful firewall
+- NEW: SYN message has been sent
+- RELATED: has an association with an existing stream
+- ESTABLISHED: three-way handshake has been completed
+
+# Stateful firewall
+tracks all communications streams, and packets are inspected
 
 # testing
 - Fuzzing testing: Black Box
@@ -193,6 +201,7 @@ protect email at Presentaion layer.
 - 4 Source quench (deprecated)
 - 5 Redirect
 - 8 echo (request)
+- 11 Time Exceeded
 
 
 # netsparker
@@ -233,6 +242,9 @@ a security scanner
 # TCP Connect/Full Open Scan
 - full 3-way hand shake.  most reliable
 
+# TCP, SEQ ACK
+- each sender SEQ = this sender last SEQ + 1
+- ACK = other SEQ + 1
 
 # Inverse TCP flag scanning
 - include: FIN, XMAS, NULL, URG, PSH
@@ -363,7 +375,8 @@ the server's trust of client-side processing by modifying data on the client-sid
 
 
 # TLS 
-uses RSA for the handshake and key negotiation.
+- uses RSA for the handshake and key negotiation.
+- Whenever a client is trying to establish a Secure Sockets Layer connection, the first packet is flagged to “Don’t Fragment.” This prevents an adversary from injecting their own packets in the middle of a secure data stream
 
 
 # Heartbleed
@@ -377,13 +390,13 @@ uses RSA for the handshake and key negotiation.
 DoS, or MITM into HTTPS sessions.
 
 
-# POODLE attack:  
+# POODLE attack
 - "Padding Oracle On Downgraded Legacy Encryption"
 - fallback to SSL 3.0.
+- Man in the middle
+- Moller, Duong, and Kotowicz. first discover.
 
 
-# Snort modes
-Sniffer Mode / Packet Logger Mode / Network Intrusion Detection System Mode
 
 
 # tcpdump
@@ -457,10 +470,13 @@ ton of bogus DISCOVER packets. Typically next, bring attacker`s rogue DHCP serve
 # Metasploit scan for SNMP configuration
 - auxiliary/scanner/snmp
 
+# Metasploit scan VS nmap
+store results in a database so the results can be looked up later 
 
 # msfvenom  
 - be used in place of msfpayload and msfencode 
 - msfencode: bypass antivirus
+- easily create an executable that could be deployed on a system to connect back to a command and control system
 
 
 # IDS/IPS
@@ -471,11 +487,14 @@ detection method
 - AIDS: Anomaly-based intrusion detection system. often with artificial intelligence type techniques.  a high false-positive rate. Baseline must be set Prior to deploying. 
 - SIDS: signature-based IDS
 
+# Snort modes
+Sniffer Mode / Packet Logger Mode / Network Intrusion Detection System Mode
 
 # Snort rule
-- ``` alert tcp any 21 -> 10.199.12.8 any (msg:"FTP Packet "; sid:1000010)
-- Rule Header, Rule Option
-- action protocol LIP LPort direction RIP RPort, Rule Option
+- ``` alert tcp any 21 -> 10.199.12.8 any (msg:"FTP Packet "; sid:1000010) ```
+- which are: Rule Header (Rule Option)
+- Rule Header: action protocol LIP LPort direction RIP RPort\
+- '!' means not. ``` alert tcp !home_net any - > external_net ```
 
 
 # Intranet machine to visit Internet
@@ -506,10 +525,13 @@ simply a collection of exploits.
 
 
 # SaaS, PaaS, IaaS
-- On-Premises user manage: Infrastructure + Virtualization, Servers, Storage, Networking.
-- Infrastructure user manage: Platform + Runtime, Middleware, O/S.
-- Platform user manage: Application, Data.
 - Software user manage: Null.
+- Platform user manage: Application, Data.
+- Infrastructure user manage: Platform + Runtime, Middleware, O/S.
+- On-Premises user manage: Infrastructure + Virtualization, Servers, Storage, Networking.
+
+
+
 
 # Staas - Storage as a Service
 
@@ -526,7 +548,7 @@ simply a collection of exploits.
 - stealth virus: change the read system call, when the user asks to read a code modified by a virus, the original form of code is shown rather than infected code. types:  boot virus,  file virus, Macroviruses. ex:  Virus.DOS.Stealth.551, Exploit.Macro.Stealth, Exploit.MSWord.Stealth, Brain, Fish.
 - tunneling virus: bypass scanner. installing itself in the interrupt handler chain. or in device drivers
 - A polymorphic virus: generates numerous mutated versions of itself.
-- Macro virus: documents, spreadsheets, and other data files
+- Macro virus: documents, spreadsheets, and other data files, ILOVEYOU virus.
 - Cavity virus: aka Spacefiller, overwriting unused areas of executable files.
 - Encryption virus, aka Ransomware
 
@@ -557,7 +579,7 @@ simply a collection of exploits.
 - while OpenVAS and Nessus are general-purpose vulnerability scanners
 
 # Session Splicing
-- split the attack traffic into many packets such that no single packet triggers the IDS.
+- split the attack payload into many packets such that no single packet triggers the IDS.
 - tools: Nessus,  'Nikto', 'whisker' and 'Sandcat'
 
 
@@ -576,19 +598,13 @@ simply a collection of exploits.
 - client authentication in wireless networks, security access
 
 
-# Dragonblood: WPA3 vulnerabilities.
-
-
-# Key reinstallation attack: KRACK, a severe replay attack on WPA2.
-
-
-# KRACK attack: Key Reinstallation Attack, a replay attack. 
 
 
 # WEP
 - Wired Equivalent Privacy,  mimic the privacy characteristics of a wired LAN,  
 - insecure RC4 cipher
 - Initialization Vector (IV) is Too Small
+- RC4: 40 to 232 bits key size. weakness is IV.
 
 
 # RC4/5/6
@@ -630,7 +646,7 @@ both the token and the authenticating server maintain a counter, whose value bes
 - Teardrop attack.  attempts to make a computer resource unavailable by flooding a network or server with requests and data
 - APDoS. advanced persistent DoS.  persist for weeks
 - Smurf. distributed denial-of-service. ICMP. 
-- Fraggle attack. distributed denial-of-service. UDP. 
+- Fraggle attack. distributed denial-of-service. UDP. an amplification attack
 - bonk attack: sends fragmented UDP packets to a Windows system, may cause the system to crash, DoS
 - Yo-yo. aimed at cloud-hosted. attack until a cloud-hosted service scales outwards. when scales back down, the attack resumes,
 - XOIC. a ddos tool.
@@ -755,9 +771,13 @@ commonly carried out by hacktivists.
 - IPsec driver.  performs protocol-level functions required to encrypt and decrypt packets
 - IKE: Internet Key Exchange, used to set up a security association (SA), exchange secret keys
 - AH (Authentication Header) protocol. integrity / ESP (Encapsulating Security Payload) protocol. integrity AND confidentiality
-- tunnel mode (gateway-to-gateway) / transport mode (host to host)
+- tunnel mode: gateway-to-gateway, encrypt payload not header, 
+- transport mode: host to host, encrypt both payload and header
 - AH tunnel/ AH trasport/ ESP tunnel/ ESP transport
 
+# ISAKMP
+- Internet Security Association and Key Management Protocol 
+- establishes the key agreement
 
 # Remote access policy
 using of a VPN  for gaining access to an internal corporate network
@@ -904,7 +924,10 @@ configured multiple domains pointing to the same host to switch quickly between 
 
 
 # CAM Overflow
-context-addressable memory (CAM) table. no more new MAC addresses can be learned. turn switch into a hub.
+- layer 2 switch is flooded
+- context-addressable memory (CAM) table. 
+- no more new MAC addresses can be learned. 
+- turn switch into a hub.
 
 
 # VLAN hopping attack 2 methods  
@@ -972,9 +995,12 @@ a tool gathering email accounts information (IP, hostname, country,...) from a d
 - monitor mode: sniff layer 2. like wireless traffic.
 - promiscuous mode: sniff layer 3. can not capture wireless.  
 
+# Broadcast frame
+send a layer 2 message to every device in a broadcast or collision domain
 
-# Residual risk = (Inherent risk) – (impact of risk controls)
-the amount of risk left over after natural or inherent risks have been reduced by risk controls.
+# Residual risk
+- Equal to: (Inherent risk) – (impact of risk controls)
+- the amount of risk left over after natural or inherent risks have been reduced by risk controls.
 
 
 # WHOIS: 
@@ -1016,10 +1042,11 @@ IETF,  standards that comprise the Internet protocol suite (TCP/IP)
 - BSSID  basic service set identifier 
 - ESSID  Extended Service Set Identification
 
+# Beacon frame
+wireless access points use to adverte its SSID to wireless devices
 
 # WPA
 Wi-Fi Protected Access
-
 
 # WPA2
 - use 4 way handshake to protect against replay attacks.
@@ -1028,6 +1055,11 @@ Wi-Fi Protected Access
 # WPA3-Enterprise
 192-bit cryptographic strength, cryptographic tools to protect sensitive data.
 
+# Dragonblood: WPA3 vulnerabilities.
+
+# Key reinstallation attack: KRACK, a severe replay attack on WPA2.
+
+# KRACK attack: Key Reinstallation Attack, a replay attack. 
 
 # Aircrack-ng
 detector, packet sniffer, WEP and WPA/WPA2-PSK cracker and analysis tool for 802.11 wireless LANs
@@ -1085,7 +1117,13 @@ physically searching for wireless networks
 - Network Basic Input Output System
 - Enumeration: list computers, shared resources
 - nbtstat: gather NetBIOS configurations information on Windows
+- services: NBT - UDP 137; NetBIOS session - TCP 139; NetBIOS datagram - UDP 138
 
+# nbtstat
+collect information about the Windows network, including the workgroup or domain you are connected to
+
+# netstat
+a command-line network utility that displays network connections for TCP, routing tables, and network protocol statistics.
 
 # JXplorers
 query remote LDAP servers, to gather information
@@ -1193,7 +1231,7 @@ implementation of X.500. X.509
 - NOOP –  testing to avoid timeouts
 - EXPN – verify the existence of one or more mailboxes
 - StartTLS - use TLS or SSL 
-- VRFY, EXPN used to find valid users, email boxes by hackers.
+- VRFY, EXPN used to find valid users, email boxes by hackers
 
 
 # open mail relay
@@ -1281,6 +1319,7 @@ hijack a target’s devices to stealthily mine cryptocurrency without the user�
 - SOA Start of [a zone of] authority record
 - AXFR Authoritative Zone Transfer
 - MX mail exchange.
+- PTR map an IP address to a hostname
 
 
 # SOA
@@ -1370,8 +1409,16 @@ uses 1,024- and 2,048-bit key strengths as asymmetric encryption algorithms
 - key size: 128, 192, or 256 bits. symmetric.
 - selected by NIST as the principal method for providing confidentiality after the DES algorithm
 - 5 finalist: MARS, RC6, Rijdael, Serpent, Twofish.
-- Rijdael: algorithm finally selected as AES.
+- Rijndael: algorithm finally selected as AES.
 
+# Vignere 
+uses a matrix of two alphabets: one across the top, with another down the side. 
+
+# Caesar cipher
+uses two alphabets: one with the plain text, while the second one is rotated some number of characters
+
+# Rot13 
+uses the Caesar cipher.
 
 # Encryption Mode: Electronic Codebook(ECB), Cipher-Block Chaining (CBC), Cipher Feedback (CFB), Output Feedback(OFB)
 - ECB no IV, cypher with same pattern if plaintext same.
@@ -1491,6 +1538,8 @@ tier on different infrasturctures.
 - windows TTL: 128
 - linux TTL: 64
 
+# TTL
+prevents IP packets from circulating throughout the Internet forever
 
 # five-tier container technology architecture
 - Tier-1: Developer machines
@@ -1733,6 +1782,10 @@ logins based on list of usernames with one default passwords on the application.
 # Cisco SPAN port
 on a Cisco switch, Switched Port Analyzer. gather traffic
 
+# LEAP
+- Lightweight Extensible Authentication Protocol
+- a Cisco proprietary protocol and can be used in place of TKIP
+- for building security tunnels
 
 # Credential enumerator
 - a self-extracting RAR file (containing bypass and service components), 
@@ -1856,6 +1909,9 @@ allow workstations to authenticate against remote services
 - send requests using Kerberos with the intent of gathering information about accounts that could be used offline.
 - look like legitimate traffic
 
+# TGT
+When the client receives the TGT, the subject authenticated within Kerberos.
+
 # net
 - ``` net view /domain:<domain_name> ```
 - show all the systems within the domain
@@ -1873,6 +1929,7 @@ allow workstations to authenticate against remote services
 
 # UDP datagram payload size
 - 65,535 - 8(header) - 20(IP header) = 65507(payload size)
+- UDP header has 4 fields: Lport, Dport, Checksum, Length
 
 # security model
 - shared responsibility model: determines who has responsibility for what aspects of a service with a cloud services provider. 
@@ -1898,6 +1955,9 @@ allow workstations to authenticate against remote services
 - technical control: like access control list.
 - physical control: mantrap, biometric device
 
+# when actual practices not follow security policies
+- sign that the policies are not up-to-date
+- evaluates and make changes to the security policies
 
 # MegaPing
 Windows GUI tool, do ping sweeps and port scans
@@ -1928,7 +1988,7 @@ includes the ability to isolate systems and detect attacks and may also include 
 
 
 # EDGAR
-- Electronic Data Gathering, Analysis, and Retrieval, 
+- Electronic Data Gathering, Analysis, and Retrieval
 - financial information about a company, including financial reports
 
 
@@ -1973,6 +2033,22 @@ aka false reject rate.
 
 # arpspoof
 tool can be used to spoof a MAC address
+
+# Executive summary report
+a high-level view of the overall penetration testing results. It is geared toward senior officials and managers.
+
+# Port address translation (PAT)
+- most common network access translation type
+- translates communications made between hosts on a private network and hosts on a public network.
+
+# MSConfig
+command in Windows allows you to bring up a list of startup items, including their locations in the Registry or the file system
+
+# mimikatz 
+used to capture passwords from the system Registry as well as from memory of a compromised system
+
+
+
 
 
 ---
