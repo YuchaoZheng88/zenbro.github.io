@@ -119,6 +119,7 @@ allows users to bypass Microsoft Windows and Apple macOS passwords.
 - forge certificates for authentication.
 - create certificates that are not officially signed by a CA
 - password cracking, ARP spoofing, and conducting man-in-the-middle attacks.
+- crack WEP passwords
 
 # PAP: 
 - Password Authentication Protocol.  
@@ -484,7 +485,7 @@ store results in a database so the results can be looked up later
 - HIDS: host-based intrusion detection system. one of the last layers of defense and reside on computer endpoints. signature-based
 detection method
 - NIDS: Network-based intrusion detection system.  at the physical and network layers after it has passed through a firewall. Only packet level analysis, can be bypass by encryption.
-- AIDS: Anomaly-based intrusion detection system. often with artificial intelligence type techniques.  a high false-positive rate. Baseline must be set Prior to deploying. 
+- AIDS: Anomaly-based intrusion detection system. often with artificial intelligence type techniques.  a high false-positive rate. Network baseline set must be set Prior to deploying. 
 - SIDS: signature-based IDS
 
 # Snort modes
@@ -638,7 +639,7 @@ both the token and the authenticating server maintain a counter, whose value bes
 
 
 # DOS
-- Slowloris: tries to keep many connections to the target web server open and hold them open as long as possible. most likely successful
+- Slowloris: tries to keep many connections to the target web server open and hold them open as long as possible. most likely successful. also tool name.
 - HTTP GET/POST (HTTP Flood): 
 - Spoofed Session Flood.  contains multiple SYN and multiple ACK packets along with one or more RST or FIN
 - IP fragmentation scan/attack. Fragmentation is associated with IP; whereas Segmentation is associated with TCP. 
@@ -787,6 +788,9 @@ using of a VPN  for gaining access to an internal corporate network
 - Authentication Header (AH), 
 - Encapsulating Security Protocol (ESP), 
 - Security Association (SA), one of the most common is Internet Key Exchange (IKE)
+
+# IPsec
+support IPv6 natively.
 
 
 # some attacks
@@ -992,8 +996,8 @@ a tool gathering email accounts information (IP, hostname, country,...) from a d
 
 
 # LAN
-- monitor mode: sniff layer 2. like wireless traffic.
-- promiscuous mode: sniff layer 3. can not capture wireless.  
+- monitor mode: sniff layer 2. capture capture 802.11/wireless traffic. enabled in order to see radio headers.
+- promiscuous mode: sniff layer 3. can not capture wireless. 
 
 # Broadcast frame
 send a layer 2 message to every device in a broadcast or collision domain
@@ -1087,7 +1091,7 @@ physically searching for wireless networks
 
 # some ports:
 - FTP: tcp/21(command), tcp/20(data).
-- SSH: tcp/22
+- SSH: tcp/22, SCP(Secure Copy Protocol) on it.
 - Telnet: tcp/23
 - SMTP: tcp/25.
 - DNS: udp/port 53.
@@ -1964,7 +1968,8 @@ Windows GUI tool, do ping sweeps and port scans
 
 
 # EternalBlue
-takes advantage of a vulnerability in the Server Message Block protocol
+- SMB, takes advantage of a vulnerability in the  Server Message Block protocol
+- on Windows System
 
 
 # Clean desk policy
@@ -2047,9 +2052,21 @@ command in Windows allows you to bring up a list of startup items, including the
 # mimikatz 
 used to capture passwords from the system Registry as well as from memory of a compromised system
 
+# clearance
+- A subject is given a security label called a clearance.
+- Their trustworthiness to process sensitive information determines their level of clearance, such as secret or confidential.
 
+# Modbus
+- a protocol 
+- in industrial control system, to communicate with programmable logic controllers
 
+# SCADA 
+- a category of software applications 
+- for controlling industrial processes
+- supervisory control and data acquisition
 
+# DIRB 
+a Web Content Scanner
 
 ---
 
