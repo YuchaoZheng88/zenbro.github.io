@@ -9,6 +9,8 @@ mermaid: true
 ---
 
 # mostly from IPPSEC and 0xdf writeups.
+- https://ippsec.rocks/
+- https://0xdf.gitlab.io/
 
 # sshpass, dd, gzip
 ``` sshpass -p raspberry ssh pi@10.10.10.48 "sudo dd if=/dev/sdb | gzip -1 -" | dd of=usb.gz ```
