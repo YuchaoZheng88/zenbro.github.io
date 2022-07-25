@@ -8,6 +8,8 @@ math: true
 mermaid: true
 ---
 
+# mostly from IPPSEC and 0xdf writeups.
+
 # sshpass, dd, gzip
 ``` sshpass -p raspberry ssh pi@10.10.10.48 "sudo dd if=/dev/sdb | gzip -1 -" | dd of=usb.gz ```
 - ``` sshpass -p raspberry ``` - use the password “raspberry” for the following SSH command (like ssh and scp)
@@ -34,7 +36,7 @@ mermaid: true
 - ``` wpscan --url https://brainfuck.htb --disable-tls-checks --api-token $WPSCAN_API ```
 
 # UDP port scan
-- ``` sudo nmap -sU -top-ports=100 panda.htb ```
+- ``` sudo nmap -sU -top-ports=100 panda.htb ``` 100 top most common ports
 
 # feroxbuster
 - ``` feroxbuster -u http://10.10.10.34 ```
@@ -47,4 +49,13 @@ mermaid: true
 
 # ls
 - ``` ls -ld {directory} ``` list directory information, not content.
+
+# wfuzz
+- ``` wfuzz -u http://panda.htb -H "Host: FUZZ.panda.htb" -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt --hh 33560 ``` fuzz virtual hosts, hide default length.
+
+# SNMP - UDP 161 
+- community string: basically a password
+- ``` onesixtyone 10.10.10.20 -c /usr/share/doc/onesixtyone/dict.txt  ``` try some community strings
+- ``` apt install snmp snmp-mibs-downloader ```
+- ``` snmpwalk -v 2c -c public 10.10.11.136 | tee snmp-full ```
 
