@@ -8,6 +8,9 @@ math: true
 mermaid: true
 ---
 
+From 0SCP-like Vulnhub boxes
+- https://www.vulnhub.com/
+
 # Commands
 - ``` service smbd restart && dhclient eth0 ```
 - ``` tcpdump -nnttttAr wireless.cap ```
@@ -89,3 +92,8 @@ mermaid: true
 - ``` ssh-keygen -b 2048 -t rsa ```
 - ``` ./ssh/authorized_keys ```
 - ``` find / -perm -g=s -o -perm -4000 ! -type l -maxdepth 3 -exec ls -ld {} \; 2>/dev/null ```
+- ``` ./program $(python3 -c 'print("a"*1000)') ```
+- ``` locate pattern_create ```
+- ``` locate pattern_offset ```
+- ``` msfvenom --platform linux -p linux/x86/exec -f py CMD="/bin/sh" -b '\x00\x0a\x0d' -a x86 -e x86/shikata_ga_nai ```
+- ``` dotdotpwn -m http -h {IP} -f config.php ```
