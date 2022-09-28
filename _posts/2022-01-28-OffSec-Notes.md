@@ -38,6 +38,43 @@ mermaid: true
 - ``` watch -n 5 w ``` execute command w every 5 seconds. command w, show who is loged in and what are they doing.
 - ``` sudo dpkg -i man-db_2.7.0.2-5_amd64.deb ``` install a debian package offline.
 - ``` sudo tail -3 /var/log/auth.log ```
-- ``` who /var/log/wtmp | tail -5 ```
-- ``` last ```
+- ``` who ``` who is logged on.
+- ``` who /var/log/wtmp | tail -5 ``` another file, default /var/run/utmp
+- ``` last ``` show last login users.
 - ``` journalctl ``` Query the systemd journal
+- ``` free -m ``` information on memory, in mebibytes.
+- ``` df -hT ``` disk mounted usage information, in human-readable format, show -T type.
+- ``` mount -t ext4 ``` display the partitions formatted as ext4
+- ``` fdisk -l ``` can check USB drive
+- ``` mkdir /mnt/usb && mount /dev/sdb1 /mnt/usb ``` mount device(eg. a USB) to directory tree
+- ``` cd ~ && umount /mnt/usb ``` unmount the device, not in its directory, nor it will be busy.
+
+## Windows
+
+- ``` dir /A ``` dir is a builtin command, ls is not.
+- ``` help ``` display all build-in commands.
+- ``` systeminfo /? ``` configuration information about the system
+- ``` echo %username% ``` %<VARIABLE-NAME>%
+- ``` set ``` Display environment variables.
+- ``` psinfo ``` vital local system information
+- ``` echo "New File" > NewFile.txt ``` standard input to a file.
+- ``` echo 2> EmptyFile.txt ``` standard error to a file.
+- ``` del EmptyFile.txt ``` delete a file.
+- ``` rename NewFile.txt RenamedFile.txt ``` rename a file.
+- ``` move RenamedFile.txt .\Music ``` move to different directory.
+- ``` mkdir ANewDirectory ``` create folders.
+- ``` rmdir ANewDirectory ``` delete folder.
+- ``` rmdir /S .\ThisFolder ``` delete folder with files in it.
+- ``` copy RenamedFile.txt ThisIsntMusic.txt ``` copy file.
+- ``` fc 1.txt 2.txt ``` compare files.
+- ``` mklink softlink fileToBeLinkedTo.txt ``` create soft link.
+- ``` mklink /h hardlink fileToBeLinkedTo.txt ``` create hard link.
+- ``` dir /s trojan.txt ``` search in the given folder and any of its subfolders.
+- ``` dir /s *.exe /p ```  search with wildcard; /P Pauses after each screenful of information.
+- ``` tree ```
+- ``` forfiles /P C:\Windows /S /M notepad.exe /c "cmd /c echo @PATH" ```/S recursive, /M search what, /c command, /P path to search.
+- ``` find "password" C:\Users\Offsec\importantfile.txt ``` like Linux grep. find do NOT support regular expressions.
+- ``` type importantfile.txt |find "password" ``` like Linux: cat importantfile.txt | grep password
+- ``` dir | find "important" ``` ls | grep <directory>
+- ``` findstr "Johnny password" importantfile.txt ``` find jonny OR password, findstr support regular expressions.
+- ``` sort /R numbers.txt ``` sort from large number to small.
