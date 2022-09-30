@@ -78,3 +78,24 @@ mermaid: true
 - ``` dir | find "important" ``` ls | grep <directory>
 - ``` findstr "Johnny password" importantfile.txt ``` find jonny OR password, findstr support regular expressions.
 - ``` sort /R numbers.txt ``` sort from large number to small.
+- Everyone. SID: S-1-1-0. . includes all users on the machine.
+- Administrator. SID: S-1-5-domain-500. .
+- Guests group. SID: SID S-1-5-32-546.
+- ``` whoami /user ``` show user,name,SID.
+- ``` net user /add Tristan greatpassword ``` create user.
+- ``` net user {username} ``` retrieve user information.
+- ``` net localgroup Administrators user123 /add ``` add user123 to Administrators group.
+- ``` net localgroup Administrators user123 /del ``` remove from group.
+- ``` net user /del user123 ``` delete the account.
+- ``` cmd /c echo hi ``` run command in another cmd.exe process.
+- ``` icacls Music ``` view folder permissions. each line of the output is considered an ACE.
+- ``` icacls Music /grant Susan:(OI)(CI)(F) ``` provide rights to folder. /deny to remove rights.
+- ``` accesschk.exe "users" c:\ ```  permissions the users group has on the C:\ drive.
+- smss.exe(Session Manager Subsystem): the first User mode process started on a Windows machine.
+- smss.exe: spawn twitce. 1st spawns winlogon.exe and csrss.exe. 2nd stays alive to watch over the user's session.
+- winlogon.exe: listen's for the famous Ctr+Alt+Delete.
+- ``` tasklist /fi "USERNAME eq NT AUTHORITY\SYSTEM" /fi "STATUS eq running" ``` filter
+- ``` tasklist /fi "imagename eq cmd.exe" ``` filter
+- ``` tasklist |find "cmd.exe" ``` anther way to filter
+- ``` taskkill /? ``` terminate a process by ID or image name.
+- ``` taskkill /PID 84 ``` kill process ID 84
