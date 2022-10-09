@@ -74,8 +74,8 @@ mermaid: true
 - ``` tree ```
 - ``` forfiles /P C:\Windows /S /M notepad.exe /c "cmd /c echo @PATH" ```/S recursive, /M search what, /c command, /P path to search.
 - ``` find "password" C:\Users\Offsec\importantfile.txt ``` like Linux grep. find do NOT support regular expressions.
-- ``` type importantfile.txt |find "password" ``` like Linux: cat importantfile.txt | grep password
-- ``` dir | find "important" ``` ls | grep <directory>
+- ``` type importantfile.txt | find "password" ``` like Linux:  ``` cat importantfile.txt | grep password ```
+- ``` dir | find "important" ``` like ``` ls | grep <directory> ```
 - ``` findstr "Johnny password" importantfile.txt ``` find jonny OR password, findstr support regular expressions.
 - ``` sort /R numbers.txt ``` sort from large number to small.
 - Everyone. SID: S-1-1-0. . includes all users on the machine.
@@ -99,3 +99,15 @@ mermaid: true
 - ``` tasklist |find "cmd.exe" ``` anther way to filter
 - ``` taskkill /? ``` terminate a process by ID or image name.
 - ``` taskkill /PID 84 ``` kill process ID 84
+- ``` pslist /? ``` 
+- ``` pslist -t |find "cmd" ``` show process tree.
+- ``` pskill 6132 ``` terminate PID 6132.
+- ``` pssuspend chrome.exe ``` suspend a process.
+- ``` pssuspend -r chrome.exe ``` resume.
+- ``` listdlls ``` dlls called by processes.
+- ``` reg /? ``` registry edit
+- ``` reg add hkcu\software\microsoft\windows\currentversion\run /v OneDrive /t REG_SZ /d "C:\Users\Offsec\AppData\Local\Microsoft\OneDrive\OneDrive.exe" ``` add one, /v value, /t data type, /d data
+- ``` reg export hkcu\environment environment ``` export registry key to a file named "environment".
+- ``` type environment ``` show exported registry, in hex format.(can be read when transfered to ascii)
+- ``` schtasks /? ``` like Linux cronjobs.
+- ``` schtasks /create /sc weekly /d mon /tn runme /tr C:\runme.exe /st 09:00 ``` a scheduled task example.
