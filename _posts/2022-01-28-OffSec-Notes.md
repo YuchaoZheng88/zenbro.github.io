@@ -10,7 +10,7 @@ mermaid: true
 
 ## Linux
 
-
+- ``` man -k pass ``` find manuals with matched keyword ‘pass’ 
 - ``` ls /etc/apache2/sites-available/*.conf ``` ls with regular expression
 - ``` echo $HISTFILE ``` show environment variable 
 - ``` set ``` explore environment variables
@@ -22,6 +22,7 @@ mermaid: true
 - ``` locate {file_name} ``` search in locate.db
 - ``` find -name {filename} -iname{case insensitive} -type f/d/l/s(file,directory,link,socket) -size 2M -mtime +1(one day or more) -1(in 24 hours) ``` 
 - ``` echo "I need to try hard" | sed 's/hard/harder/' ``` replace
+- ``` cat file.txt | sed ':a;N;$!ba;s/\n//g' ``` remove newline from file.txt
 - ``` echo "hello::there::friend" | awk -F "::" '{print $1, $3}' ``` 
 - ``` comm -12 scan-a.txt scan-b.txt ``` appear in both file, -1 suppress column 1 (lines unique to FILE1)
 - ``` diff -u scan-a.txt scan-b.txt ``` -u unified format; -b ignore blank lines; -d try hard to find a smaller set of changes
@@ -111,3 +112,8 @@ mermaid: true
 - ``` type environment ``` show exported registry, in hex format.(can be read when transfered to ascii)
 - ``` schtasks /? ``` like Linux cronjobs.
 - ``` schtasks /create /sc weekly /d mon /tn runme /tr C:\runme.exe /st 09:00 ``` a scheduled task example.
+- ``` fsutil ``` 
+- ``` fsutil fsinfo volumeinfo C: ``` 
+- ``` echo fileTwo uses the 'offsec' stream > offsecStream.txt:offsec ``` echo to NTFS`s ADS. Alternate Data Streams
+- ``` more offsecStream.txt:offsec ``` read from ADS, can not just type out ADS.
+- ``` dir /r ``` allow us to detect ADS usage.
