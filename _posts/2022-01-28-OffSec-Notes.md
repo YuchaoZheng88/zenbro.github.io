@@ -117,3 +117,7 @@ mermaid: true
 - ``` echo fileTwo uses the 'offsec' stream > offsecStream.txt:offsec ``` echo to NTFS`s ADS. Alternate Data Streams
 - ``` more offsecStream.txt:offsec ``` read from ADS, can not just type out ADS.
 - ``` dir /r ``` allow us to detect ADS usage.
+
+## Networking
+- TCP/IP Model: L4 software, L3 machines, L2 networks, L1 same physical network.
+- DHCP runs on TCP/IP application layer. 
