@@ -121,3 +121,56 @@ mermaid: true
 ## Networking
 - TCP/IP Model: L4 software, L3 machines, L2 networks, L1 same physical network.
 - DHCP runs on TCP/IP application layer. 
+
+## BASH
+
+Difference between single and double quotes.
+```bash
+greeting='Hello World'
+greeting1='New $greeting'
+greeting2="New $greeting"
+
+echo $greeting1
+# New $greeting
+
+echo $greeting2
+# New Hello World
+```
+
+Concatenating strings
+```bash
+greet1="Hello, my name is "
+greet2="Jolinda"
+greeting=$greet1$greet2
+echo $greeting
+# Hello, my name is Jolinda
+```
+
+$(...) preferred over `...` (backticks)
+```bash
+user1="`whoami`"
+user=$(whoami)
+echo $user1
+echo $user
+# same results
+# why preferred, http://mywiki.wooledge.org/BashFAQ/082
+```
+
+(( ... )) construct permits arithmetic expansion and evaluation
+```bash
+echo $((7+"3"))
+g=5
+echo $((g--))
+echo $((--g))
+# variables are within the double parentheses and the values resemble numbers
+# variables in bash are strings by default
+let a=1+1
+# let make variables to number
+```
+
+arguments
+```bash
+#!/bin/bash
+echo "There are $# arguments"
+echo "The first two arguments are $1 and $2"
+```
