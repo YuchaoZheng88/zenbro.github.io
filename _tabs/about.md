@@ -4,9 +4,11 @@ icon: fas fa-info-circle
 order: 4
 ---
 
+---
+
 # Exams
 
-![CEH](/CEH.jpg){: width="250" }
+![CEH](/CEH.jpg){: width="500" }
 
 ---
 
