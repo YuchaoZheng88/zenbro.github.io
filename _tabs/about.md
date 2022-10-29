@@ -6,7 +6,7 @@ order: 4
 
 # Exams
 
-![CEH](/CEH.png){: width="250" }
+![CEH](/CEH.jpg){: width="250" }
 
 ---
 
