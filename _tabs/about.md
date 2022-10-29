@@ -4,15 +4,18 @@ icon: fas fa-info-circle
 order: 4
 ---
 
+# Exams
+
+![CEH](/CEH.png){: width="250" }
 
 ---
 
-# TRYHACKME
+# TryHackMe Rank
 <script src="https://tryhackme.com/badge/836492"></script>
 
 ---
 
-# COURSES
+# Course
 
 #### THM PenTest
 ![jrpentest](/jrpen.png){: width="250" }
@@ -34,7 +37,7 @@ order: 4
 
 ---
 
-# COFFEE
+# Coffee Certificate
 ![coffee](/coffee.jpg){: width="250" }
 
 ---
