@@ -16,12 +16,12 @@ order: 4
 
 ---
 
-# TryHackMe Rank
+# TryHackMe
 <script src="https://tryhackme.com/badge/836492"></script>
 
 ---
 
-# Course
+# Courses
 
 #### THM PenTest
 ![jrpentest](/jrpen.png){: width="250" }
@@ -43,7 +43,7 @@ order: 4
 
 ---
 
-# Coffee Certificate
+# Coffee
 ![coffee](/coffee.jpg){: width="250" }
 
 ---
