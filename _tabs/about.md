@@ -21,14 +21,15 @@ order: 4
 #### Master`s degree (Cyber Security)
 ![Master](/masterdegree.jpg){: width="500" }
 
-
 #### Bachelor's degree (Information Security)
-![Bachelor](/bachelorD.jpg){: width="320" }
+![Bachelor](/bachelorD.jpg){: width="300" }
 
 ---
 
-# 3. Tryhackme
-<script src="https://tryhackme.com/badge/836492"></script>
+# 3. Language
+
+#### IELTS (Score: 7.5 ; CERF: C1)
+![IELTS](/IELTS.jpg){: width="300" }
 
 ---
 
@@ -54,7 +55,12 @@ order: 4
 
 ---
 
-# 5. Coffee
+# 5. Tryhackme
+<script src="https://tryhackme.com/badge/836492"></script>
+
+---
+
+# 6. Coffee
 ![coffee](/coffee.jpg){: width="250" }
 
 ---
