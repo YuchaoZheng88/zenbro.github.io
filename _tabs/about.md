@@ -9,27 +9,27 @@ order: 4
 # 1. Certifications
 
 #### Certified Ethical Hacker (CEH)
-![CEH](/cehcert.jpg){: width="500" }
+![CEH](/cehcert.jpg){: width="300" }
 
 #### CompTIA Network+
-![Network+](/networkP.jpg){: width="500" }
+![Network+](/networkP.jpg){: width="300" }
 
 ---
 
 # 2. Degrees
 
 #### Master`s degree (Cyber Security)
-![Master](/masterdegree.jpg){: width="500" }
+![Master](/masterdegree.jpg){: width="300" }
 
 #### Bachelor's degree (Information Security)
-![Bachelor](/bachelorD.jpg){: width="300" }
+![Bachelor](/bachelorD.jpg){: width="150" }
 
 ---
 
 # 3. Language
 
 #### IELTS (Score: 7.5 ; CERF: C1)
-![IELTS](/IELTS.jpg){: width="300" }
+![IELTS](/IELTS.jpg){: width="150" }
 
 ---
 
