@@ -9,17 +9,17 @@ order: 4
 # 1. Certifications
 
 #### Certified Ethical Hacker (CEH)
-![CEH](/cehcert.jpg){: width="300" }
+![CEH](/cehcert.jpg){: width="380" }
 
 #### CompTIA Network+
-![Network+](/networkP.jpg){: width="300" }
+![Network+](/networkP.jpg){: width="380" }
 
 ---
 
 # 2. Degrees
 
 #### Master`s degree (Cyber Security)
-![Master](/masterdegree.jpg){: width="300" }
+![Master](/masterdegree.jpg){: width="380" }
 
 #### Bachelor's degree (Information Security)
 ![Bachelor](/bachelorD.jpg){: width="150" }
