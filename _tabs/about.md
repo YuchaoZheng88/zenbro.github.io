@@ -24,6 +24,7 @@ order: 4
 
 #### Bachelor's degree
 ![Bachelor](/bachelorD.jpg){: width="350" }
+
 ---
 
 # 3. Tryhackme
