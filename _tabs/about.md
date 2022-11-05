@@ -18,12 +18,12 @@ order: 4
 
 # 2. Degrees
 
-#### Master`s degree
-![Master](/masterdegree.jpg){: width="350" }
+#### Master`s degree (Cyber Security)
+![Master](/masterdegree.jpg){: width="500" }
 
 
-#### Bachelor's degree
-![Bachelor](/bachelorD.jpg){: width="350" }
+#### Bachelor's degree (Information Security)
+![Bachelor](/bachelorD.jpg){: width="320" }
 
 ---
 
