@@ -36,7 +36,7 @@ order: 4
 # 4. Courses
 
 #### THM PenTest
-![jrpentest](/jrpen.png){: width="250" }
+![jrpentest](/jrpen.png){: width="250" } ![linuxpriv](/linuxesc.jpg){: width="250" }
 
 #### Linux PriEsc
 ![linuxpriv](/linuxesc.jpg){: width="250" }
