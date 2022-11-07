@@ -8,6 +8,9 @@ math: true
 mermaid: true
 ---
 
+# Intro
+The notes are from offensive Security official traning.
+
 ## Linux
 
 - ``` man -k pass ``` find manuals with matched keyword ‘pass’ 
@@ -38,7 +41,7 @@ mermaid: true
 - ``` sudo tail -f /var/log/apache2/access.log ``` -f follow, monitor file change.
 - ``` watch -n 5 w ``` execute command w every 5 seconds. command w, show who is loged in and what are they doing.
 - ``` sudo dpkg -i man-db_2.7.0.2-5_amd64.deb ``` install a debian package offline.
-- ``` sudo tail -3 /var/log/auth.log ```
+- ``` sudo tail -3 /var/log/auth.log ``` show last 3 lines
 - ``` who ``` who is logged on.
 - ``` who /var/log/wtmp | tail -5 ``` another file, default /var/run/utmp
 - ``` last ``` show last login users.
@@ -49,6 +52,7 @@ mermaid: true
 - ``` fdisk -l ``` can check USB drive
 - ``` mkdir /mnt/usb && mount /dev/sdb1 /mnt/usb ``` mount device(eg. a USB) to directory tree
 - ``` cd ~ && umount /mnt/usb ``` unmount the device, not in its directory, nor it will be busy.
+- ``` cp *9*16.png /anotherFoler ``` copy files end with 9*16.png to another folder.
 
 ## Windows
 
@@ -193,34 +197,34 @@ $LINENO			The current line number in the script
 ```
 
 same line read to user, with prompt
-```
+```bash
 read -p 'Enter your name: ' user
 ```
 
 operators
 ```
-OPERATOR                  DESCRIPTION: EXPRESSION TRUE IF...
-!EXPRESSION               The EXPRESSION is false.
--n STRING							    STRING length is greater than zero
--z STRING							    The length of STRING is zero (empty)
-STRING1 != STRING2		    STRING1 is not equal to STRING2
-STRING1 = STRING2			    STRING1 is equal to STRING2
-INTEGER1 -eq INTEGER2	    INTEGER1 is equal to INTEGER2
-INTEGER1 -ne INTEGER2	    INTEGER1 is not equal to INTEGER2
-INTEGER1 -gt INTEGER2	    INTEGER1 is greater than INTEGER2
-INTEGER1 -lt INTEGER2		  INTEGER1 is less than INTEGER2
-INTEGER1 -ge INTEGER2	    INTEGER1 is greater than or equal to INTEGER 2
-INTEGER1 -le INTEGER2	    INTEGER1 is less than or equal to INTEGER 2
--d FILE								    FILE exists and is a directory
--e FILE								    FILE exists
--r FILE								    FILE exists and has read permission
--s FILE								    FILE exists and it is not empty
--w FILE								    FILE exists and has write permission
--x FILE								    FILE exists and has execute permission
+OPERATOR						DESCRIPTION: EXPRESSION TRUE IF...
+!EXPRESSION					The EXPRESSION is false.
+-n STRING							STRING length is greater than zero
+-z STRING							The length of STRING is zero (empty)
+STRING1 != STRING2		STRING1 is not equal to STRING2
+STRING1 = STRING2			STRING1 is equal to STRING2
+INTEGER1 -eq INTEGER2	INTEGER1 is equal to INTEGER2
+INTEGER1 -ne INTEGER2	INTEGER1 is not equal to INTEGER2
+INTEGER1 -gt INTEGER2	INTEGER1 is greater than INTEGER2
+INTEGER1 -lt INTEGER2		INTEGER1 is less than INTEGER2
+INTEGER1 -ge INTEGER2	INTEGER1 is greater than or equal to INTEGER 2
+INTEGER1 -le INTEGER2	INTEGER1 is less than or equal to INTEGER 2
+-d FILE								FILE exists and is a directory
+-e FILE								FILE exists
+-r FILE								FILE exists and has read permission
+-s FILE								FILE exists and it is not empty
+-w FILE								FILE exists and has write permission
+-x FILE								FILE exists and has execute permission
 ```
 
 if
-```
+```bash
 read -p "file name: " file
 if [ -e $file ]
 then
@@ -228,4 +232,45 @@ then
 else
   echo "file does not exist!"
 fi
+```
+
+AND OR
+```bash
+grep $user2 /etc/passwd && echo "$user2 found\!" || echo "$user2 not found\!"
+```
+
+Loop
+```bash
+for ip in $(seq 1 10); do echo 10.11.1.$ip; done
+# another way
+for ip in {1..10}; do echo 10.11.1.$ip;done
+```
+
+Loop read lines of a file
+```bash
+file="poem.txt"
+while read line
+   echo $line
+done < $file
+# redirect the file into the done command
+```
+
+Function in shell
+```bash
+print_me ()
+{
+	echo "print it\!"
+}
+
+print_me
+# notice the exclamation mark.
+```
+
+pass args to function
+```bash
+pass_arg() {
+  echo "Today's random number is: $1"
+}
+
+pass_arg 123123
 ```
