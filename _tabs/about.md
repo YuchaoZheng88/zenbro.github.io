@@ -11,6 +11,10 @@ order: 4
 #### Certified Ethical Hacker (CEH)
 ![CEH](/cehcert.jpg){: width="380" }
 
+#### CompTIA Security+
+![Security+](/securityP.jpg){: width="380" }
+
+
 #### CompTIA Network+
 ![Network+](/networkP.jpg){: width="380" }
 
