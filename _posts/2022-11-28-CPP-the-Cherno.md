@@ -189,10 +189,51 @@ e35
 - initialize class.
 - Entity() : m_Name("Unknown"), m_Score(0) {}        // same as below
 - Entity() { m_Name = "Unknown"; m_Score = 0; }    // same as above
+- Entity(const std::string& name) : m_Name(name) {} // another example
 
 e36 Ternary 
 - Speed = Level > 5 ? 10 : 5;
 
 e37
--  using namespace std; // is not not not recommended.
+- using namespace std; // is not not not recommended.
+- Entity* entity = new Entity();
+- entity->function(); or (*entiry).function(); // pointer -> , dereference .
+
+e38 new
+- new on heap
+- right click ‘new’ -> go to definition. new is an operator.
+- void* __CRTDECL operator new(size_t _Size);
+- Entity* e = new Entiry();                              // same as below, but call constructor.
+- Entity* e = (Entity*)malloc(sizeof(Entity));   // same as above, but not call constructor.
+- delete e; // when use new, must delete.
+- Entity* e = new(ptr) Entiry(); // new to a specific pointer.
+
+e39
+- explicit constructor, stricter rule
+
+e40 operator overloading
+```c++
+Vector2 operator+(const Vector2& other) const{
+	return Vector2(x+other.x, y+other.y);
+}// overload + 
+
+Verctor2 Add(const Vector2& other) const{
+	return *this + other; 
+}// this is a pointer to the object, *this is Vector2
+
+Verctor2 Add(const Vector2& other) const{
+	return operator+(other);
+} // same as above, but werid.
+```
+
+overload std::cout to print class Vector2
+```c++
+std::ostream& operator<<(std::ostream& stream, cont Vector2& other){
+	stream << other.x << ", " << other.y;
+	return stream;
+}
+```
+
+e41 this
+- pointer to the current object instance that the method(non-static) belongs to.
 - 
