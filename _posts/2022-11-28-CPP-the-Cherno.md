@@ -236,4 +236,23 @@ std::ostream& operator<<(std::ostream& stream, cont Vector2& other){
 
 e41 this
 - pointer to the current object instance that the method(non-static) belongs to.
-- 
+
+e42
+- allocate object on stack, will destroy when code out of scope. On heap, it is not.
+```c++
+class ScopedPtr{
+private:
+	Entity* m_Ptr;
+public:
+	ScopedPtr(Entity* ptr): m_Ptr(ptr) {}
+	
+	~ScopedPtr() { delete m_Ptr; }
+}
+
+int main() {
+	{ ScopedPtr e = new Entity(); }
+}
+
+// new on heap will not free memory when outof scope, 
+// but with ScopedPtr, the pointer on stack will free the memory on heap.
+```
