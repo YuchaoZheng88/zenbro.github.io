@@ -253,6 +253,336 @@ int main() {
 	{ ScopedPtr e = new Entity(); }
 }
 
-// new on heap will not free memory when outof scope, 
-// but with ScopedPtr, the pointer on stack will free the memory on heap.
+// new on heap will not auto free memory when out of scope, 
+// but with ScopedPtr, the pointer on stack will free the memory on heap by its destructor.
+```
+
+e42 smart pointer
+- call new on heap, do not need to delete.
+- wrapper around a raw pointer.
+- can not copy a unique pointer, one auto delete will affect the other.
+```c++
+#include <memory>
+{
+	{ std::unique_ptr<Entity> entity = std::make_unique<Entity>(); } // best safe way 
+	// { std::unique_ptr<Entity> entity(new Entitry()); }  another way to initialize.
+	// can not use = new Entitry(); to initialize, because explicit keywork in unique_ptr.
+	// entity will be destroyed when out of scope.
+}
+
+//in unique_ptr classs
+unique_ptr(const unique_ptr&)            = delete;
+unique_ptr& operator=(const unique_ptr&) = delete;
+// in case copy a unique pointer.
+```
+
+shared pointer
+- std::unique_ptr, std::shared_ptr, std::weak_ptr
+- need reference counter, count how many instances have created.
+- memory freed when last pointer dies.
+```c++
+int main(){
+	{	
+	std::shared_ptr<Entity> e0;
+		{
+			std::shared_ptr<Entiry> sharedEntity = std::make_shared<Entity>();
+			e0 = sharedEntiry; 
+		}  // heap not freed here. e0 still exists.
+	} // heap freed here, e0 out of scope.
+}
+```
+
+weak pointer
+- do not count the instances, act as an observer, use after asking if exists.
+```c++
+std::weak_ptr<int> gw;
+gw.use_count();
+if (std::shared_ptr<int> spt = gw.lock()) {} // no object, lock return empty, so false
+if (gw.expired()) {} // Equivalent to use_count() == 0
+```
+
+e44
+```c++
+class String{
+private:
+	char* m_Buffer;
+	unsigned int m_Size;
+public:
+	String(const char* string){
+		m_Size = strlen(string);
+		m_Buffer = new char[m_Size+1]; // 1 for null termination character.
+		memcpy(m_Buffer, string, m_Size); // m_Size in bytes.
+		m_Buffer[m_Size] = 0;
+	}
+	
+	~String(){
+		delete[] m_Buffer;	
+	}
+	
+	friend std::ostream& operator<<(std::ostream& stream, const String& string);
+	// this allow ostream << operator to get String class private value m_Buffer.
+};
+
+std::ostream& operator<<(std::ostream& stream, const String& string){
+	stream << string.m_Buffer;
+	return stream;
+}
+
+int main(){
+	String a = "abc";
+	String b = a;
+	// a is a reference, b just copied all variable from a. shallow copy.
+	// copy int value and memory address.
+	// end of scope, it will destruct twice, cause program to crash.
+}
+```
+
+copy constructor
+```c++
+String(const String& other)
+{
+	m_Buffer = new char[m_Size + 1];
+	memcoy(this, &other, sizeof(other)); //deep copy
+	// *this.buffer = other.buffer; *this.size=other.size shallow copy
+}
+// default will be shallow copy.
+// make your version of how to copy.
+```
+
+e45
+```c++
+int offset = (int)&((Vector3*)nullptr)->y;
+// check offset of a class.
+```
+
+e46 std::vector
+- dynamic array. opposite to raw array, size fixed.
+```c++
+#include <vector>
+
+std::vector<MyStruct> mystruct;
+mystruct.push_back({1,2,3}); // {1,2,3} initialize a new mystruct.
+int i = mystruct.size();
+```
+
+e47 vector push_back copy times
+- test how many times a class has been copied.
+- log in copy constructor.
+```c++
+std::vector<Vertex> vertices;
+vertices.push_back(Vertex(1,2,3)); // copy *1, total 1. copy from main stack, to heap.
+vertices.push_back(Vertex(4,5,6)); // copy *2, total 3. resize, then on heap.
+vertices.push_back(Vertex(7,8,9)); // copy *3, total 6. resize, then on heap.
+
+vertices.reserve(3); // use before push_back
+```
+- ALWAYS try to reserve before you start pushing back elements into the container.
+```c++
+// no single copy version
+std::vector<Vertex> vertices;
+vertices.reserve(3);
+vertices.emplace_back(1,2,3);
+vertices.emplace_back(4,5,6);
+vertices.emplace_back(7,8,9);
+// total 0 copy !!!
+```
+
+e48 static in scope
+```c++
+void function(){
+	static int i = 0;
+	i++;  
+	std::cout << i << std::endl;
+}
+// output: 1,2,3,.....
+```
+singleton by static, easy and clean
+```c++
+class Singleton(){
+public:
+	static Singleton& get(){
+		static Singleton instance; // first time will create it on stack, later will not.
+		return instance;	
+	}
+};
+```
+
+e49
+- glfw3.dll   dynamic library.  glfw3dll.lib  static library use with .dll. link at compile time.
+- glfw3.lib   static library
+- config -> c/c++ -> Genral -> Additional Include Directories.  for header.
+- config -> Linker -> Input -> Additional Dependencies.  for lib file name.
+- config -> Linker -> General -> Additional Library Directories. for lib path.
+
+```c++
+extern "C" int glfwInit(); 
+// glfw is a C library, without extern “C” will mangling the name with C++.
+// preserve the name even though it is in C.
+```
+
+e50 dll
+- use when should use. runtime.
+- config -> Linker -> Input -> Additional Dependencies.  add glfw3dll.lib. this help find .dll function address.
+- complie and run. get error. can not find glfw3.dll.
+- simple way: copy .dll to .exe, in same path.
+```c++
+/* GLFWAPI is used to declare public API functions for export
+ * from the DLL / shared library / dynamic library.
+ */
+#if defined(_WIN32) && defined(_GLFW_BUILD_DLL)
+ /* We are building GLFW as a Win32 DLL */
+ #define GLFWAPI __declspec(dllexport)
+#elif defined(_WIN32) && defined(GLFW_DLL)
+ /* We are calling a GLFW Win32 DLL */
+ #define GLFWAPI __declspec(dllimport)
+#elif defined(__GNUC__) && defined(_GLFW_BUILD_DLL)
+ /* We are building GLFW as a Unix shared library */
+ #define GLFWAPI __attribute__((visibility("default")))
+#else
+ #define GLFWAPI
+#endif
+```
+
+e51
+- more projects in one solution.
+- right click one project -> add -> reference -> another project.
+- complie A and B, if A rely on B.
+
+e52
+- function parsing pointer than reference, good thing is null can be parsed.
+- array, vector difference. Just assign value(without new): array data on stack, vector data on heap.
+- tuple, struct.
+
+e53 templates
+- compiler write code for you.
+```c++
+template<typename T>
+void function(T value){ // do somethin.}
+function(5);
+function("afsdf");
+
+// if define class name
+template<class T>
+function<int>(5);
+function<std::string>("aasdf");
+```
+- If not call templeta function, compiler will ignore it, even with sytax error.
+- template only create code when we use the function.
+```c++
+template<typename T, int N>
+
+class Array{
+private:
+	T m_Array[N];
+public:
+	int GetSize() const {return N;}
+};
+
+// in main
+Array<int, 5> array;
+// in compile time, the array class will be coded as m_Array[5]
+```
+
+e54
+- new allocate on heap.
+- delete value, delete[] array; after using new.
+- new will call malloc function, which ask free list, for free memory to allocate.
+- allocate on stack is one CPU instruction; while on heap, a series of instructions. 
+- stack: mov DWORD PTR _value$[ebp], 5 ; one instruction
+
+e55 macro
+- find and replace
+- #define WAIT std::cin.get()
+- debug mode need more logs.
+- Indebug mode: C/C++ -> Preprocessor -> Preprocessor Definitions: add PR_DEBUG in the list.
+- same as above in release mode, add PR_RELEASE.
+```c++
+#ifdef PR_DEBUG
+#define LOG(x) std::cout << x << std::endl
+#elif defined(PR_RELEASE)
+#define LOG(x)
+#endif
+
+// if in debug mode, LOG(x) will print; in other mode, LOG(x) do nothing
+
+// another way
+#define PR_DEBUG 1
+#if PR_DEBUG == 1
+// same as above, maybe a little bit clear
+
+// like comment out all macro, see below
+#if 0
+// all the marco you want to comment out here.
+#endif
+```
+
+e58/59 function pointer, lambda
+```c++
+void fun(int a){}
+
+void (*fun_ptr)(int) = &fun;
+
+auto x1 = [](int i){ return i; }; // lambda
+```
+
+e62 threads
+```c++
+#include <thread>
+
+void DoWork() {
+	using namespace std::literals::chrono_literals;  // use 1s later
+	std::cout << std::this_thread::get_id();   // print thread ID.
+	std::this_thread::sleep_for(1s);   		 	 // sleep for 1 second.
+}
+
+int main(){
+	std::thread worker(DoWork);
+	work.join(); // main thread wait for worker thread to finish.
+}
+```
+
+e63
+```c++
+#include <chrono>
+
+auto start = std::chrono::high_resolution_clock::now();
+std::chrono::duration<float> duration = end - start;
+std::cout << duration.count();
+
+////////////////////////////////////
+
+struct Timer{
+	std::chrono::time_point<std::chrono::steady_clock> start,end;
+	std::chrono::duration<float> duration;
+	
+	Timer(){
+		start = std::chrono::high_resolution_clock::now();	
+	}
+	
+	~Timer(){
+		end = std::chrono::high_resolution_clock::now();
+		duration = end - start;
+		float ms = duration.count() * 1000.0f;
+		std::cout << Timer took << ms << "ms" << std::endl;	
+	}
+};
+
+// test the run time of code block, just put 
+// Timer timer;
+// in the beginning of the code block.
+```
+
+e65 sorting
+```c++
+std::vector<int> values = {1,3,4,6,5};
+std::sort(values.begin(), values,end(), [](int a, int b){
+	return a<b;
+});
+```
+
+e66 type punning
+```c++
+Entity e = {5, 8};
+int* position = (int*)&e;
+int y = *(int*)((char*)&e+4);  // 4 char is 4 byte, to the next int y, then dereference.
 ```
