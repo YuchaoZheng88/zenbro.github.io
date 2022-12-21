@@ -425,6 +425,7 @@ e50 dll
 - config -> Linker -> Input -> Additional Dependencies.  add glfw3dll.lib. this help find .dll function address.
 - complie and run. get error. can not find glfw3.dll.
 - simple way: copy .dll to .exe, in same path.
+
 ```c++
 /* GLFWAPI is used to declare public API functions for export
  * from the DLL / shared library / dynamic library.
@@ -585,4 +586,97 @@ e66 type punning
 Entity e = {5, 8};
 int* position = (int*)&e;
 int y = *(int*)((char*)&e+4);  // 4 char is 4 byte, to the next int y, then dereference.
+```
+
+e67
+```c++
+struct Vector4{
+	union{
+		struct{
+			float x,y,z,w;		
+		};
+		struct{
+			vector2 a,b;
+		};
+	}
+};
+// using vector4.z, you can set vector2.b.x
+```
+
+e68 virtual destructor
+- like virtual function.
+```c++
+Base* poly = new Derived();
+delete poly;
+// ~Derived() will not be called.
+// only call: Base constructor, Derived constructor, Base Destructor.
+// if free memory action in ~Derived(), it will not be called.
+// in Base class, add virtual keyword before ~Base(){}, the ~Derived() will be called.
+// order will be: base cons, derived cons, base destructor, derived destructor.
+```
+
+e69 casting
+- static_cast, dynamic_cast, reinterpret_cast, explicit cast, const_cast
+- static_cast: no run-time test, use when know passed object type.
+- dynamic_cast: don't know what the dynamic type of the object is. bad_cast exception. can not down casting. safe.
+
+```c++
+DerivedClass * a = dynamic_cast<DerivedClass*>(baseObject);
+// down casting, return nullptr.
+
+Player* p = dynamic_cast<Player*>(actuallyEnemy);
+// run time error.
+if(dynamic_cast<Player*>(actuallyEnemy)) {}
+// like C# is, Java instanceof().  If actuallyEnemy is a Player.
+```
+
+e70 condition & actions
+- set condition in runtime
+- use condition & action together
+- debug easily
+
+e71
+- precompiled headers. PCH.
+
+e74 benchmark
+- ref e63
+- use release mode
+
+e75 structured binding
+```c++
+std::tuple<std::string, int> CreatePerson() {return{"name", 15};}
+std::string name = std::get<0>(person); // get the first element of tuple
+
+// another way
+std::tie(name, age) = CreatePerson();
+
+// another way, cpp version 17 feature
+auto[name, age] = CreatePerson();
+```
+
+e76 optional data
+```c++
+std::optional<std::string> ReadFileAsString(const std::string& filepath){
+	std::ifstream stream(filepath);
+	if(stream){
+		std::string result;
+		stream.close();
+		return result;	
+	}
+	
+	return {};
+}
+
+
+std::optional<std::string> data = ReadFileAsString("data.txt");
+if(data.has_value()){} // check if data is empty
+}
+// nicer way to handle if value not be present.
+```
+
+e77 
+```c++
+std::variant<std::string, int> data; // can save 2 different types of data
+data.index() // save string will be 0, in will be 1.
+auto* value = std::get_if<std::string>(&data);
 ```
