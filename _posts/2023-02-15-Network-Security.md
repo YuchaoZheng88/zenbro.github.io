@@ -46,7 +46,9 @@ mermaid: true
 #### socket APIs
 - system call, that application give data through to kernel.
 
-#### send a packet
+#### send a packet, client
+- OS will randomly pick a source port number for the code below.
+
 python
 ```python
 import socket
@@ -82,26 +84,92 @@ void main()
 	// defined in sys/socket.h
 	// int socket(int domain, int type, int protocol);
 	// the last parameter can be filled with 0, as only UDP protocol can be used.
+	// a file descriptor will be returned.
 	int sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-
+	
+	// ssize_t sendto(int sockfd, const void *buf, size_t len, int flags, const struct sockaddr *dest_addr, socklen_t addrlen);
 	sendto(sock, data, strlen(data), 0, (struct sockaddr *)&dest_info, sizeof(dest_info));
 	close(sock);
 }
 ```
 
+#### receive a packet, server
+
+python
+
+```python
+import socket
+IP = "0.0.0.0"
+PORT = 9090
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.bind((IP, PORT)) # computer may have multiple NIC, use IP specify one
+
+while True:
+	data, (ip, port) = sock.recvfrom(1024)
+	print("Sender: {} and Port: {}".format(ip, port))
+	print("Received message: {}".format(data))
+```
+
+c
+- https://www.geeksforgeeks.org/socket-programming-cc/
+- server.sin_addr.s_addr = htonl(INADDR_ANY);  // any interface
+- bind(sock, (struct sockaddr *)&server, sizeof(server)) // return <0 means failure
+- recvfrom(sock, buf, 1500-1, 0, (struct sockaddr *) &client, &clientlen);
+- https://pubs.opengroup.org/onlinepubs/007904875/functions/recvfrom.html
 
 #### how packets received
-- NIC: (check frame destination)
-- Copy to ring buffer in kernel. (by DMA)
-- NIC interrupts CPU.
-- CPU copies packets from buffer into a queue. (buffer has more room)
-- Callback handler invoked by kernel to process data from queue. (based on protocols)
+- 1. NIC: filter packet by frame destination (MAC addr)
+- 2. NIC copy to computer RAM(ring buffer in kernel), by DMA (direct memory access). or old way to on-chip memory.
+- 3. NIC interrupts(aka, informs) CPU. CPU needs to quickly take data out, because RAM or on-chip memory have limited space.
+- 4. Link-level driver is triggered when CPU takes control. It will take data out to upper  layer.
+- 4b. copy to raw socket. (dest IP not for me will not be dropped later.)
+- 4c. can pass to BPF( low level packet filter), before protocol stack, to save computer resources.
+- 5. Protocol stack. (first of it is IP layer, look IP addr again, if it is for me. If not, drop, unless router, to foward) 
 
-#### Promiscuous  & Monitor 
+#### packet sniffing
+- Promiscuous mode  & Monitor mode. (Get data not for me on layer 2)
+- raw socket. (Get data not for me on layer 3) header not stripped of through raw socket, normal socket will only get data.
+
+```c
+// https://man7.org/linux/man-pages/man7/packet.7.html
+// https://man7.org/linux/man-pages/man2/setsockopt.2.html
+int main(){
+	int PACKET_LEN = 512;
+	char buffer[PACKET_LEN];
+	struct sockaddr saddr;
+	struct packet_mreq mr; 
+	
+	// create raw socket
+	int sock = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+	
+	// turn on promiscuous mode	
+	mr.mr_type = PACKET_MR_PROMISC;
+	setsockopt(sock, SOL_PACKET, PACKET_ADD_MEMBERSHIP, &mr, sizeof(mr));
+	
+	//capture packets
+	while(1){
+		int data_size = recvfrom(sock, buffer, PACKET_LEN, 0, &saddr, (socklen_t*)sizeof(saddr));
+		if(data_size) printf("get packet");
+	}
+	close(sock);
+	return 0;
+}
+```
 
 #### BSD Packet Filter(BPF)
+- low level filter.
+- OS specific.
 
-#### PCAP
+#### PCAP (to sniff)
+- https://www.tcpdump.org/
+- developed by tcpdump.
+- split the sniffing part from tcpdump, to a library called libpcap. Can be used by other programs.
+- linux: libpcap. Windows: WinPcap, Npcap.
+- tools based on it: wireshark, tcpdump, scapy, nmap, snort, McAfee.
+- how to use: 1. initial config. 2. set filter. 3. start sniffing.
+- as above: 1. pcapt_t *pcap_open_live(...); 2. int pcap_compile(...); 3. int pcap_setfilter(...);
+- build BPF from human-readable strings; open promiscuous mode.
 
 
 
