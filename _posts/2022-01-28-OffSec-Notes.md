@@ -9,7 +9,75 @@ mermaid: true
 ---
 
 # Intro
-The notes are from offensive Security official traning.
+- The notes are from offensive Security official traning.
+- Must finish before: 2023-09-20.
+- PEN-103 (Kali Linux Revealed) + 1 KLCP exam attempt
+- PEN-210 (Offensive Security Wireless Attacks) + 1 OSWP exam attempt
+
+---
+
+# PEN-103 (KLCP)
+
+## From book: Kali Linux Revealed
+
+#### 1. About
+
+- Johnny Long
+- WHoppiX -> WHAX -> BackTrack -> BackTrack 4 -> Kali.
+- mobile: Kali NetHunter.
+- cmd lspci , CUDA library, hash cat.
+- Kali rolling. you will receive updates every single day.
+- Kali based on "Debian Testing": https://www.debian.org/releases/testing/
+- Debian derivatives: https://www.debian.org/derivatives/#list
+- Kali packet tracker: https://pkg.kali.org/derivative/kali-dev/
+- live-build configuration: https://gitlab.com/kalilinux/build-scripts/live-build-config Completely Customizable
+- Kali Linux disables any installed service that would listen on a public network interface by default, such as HTTP and SSH
+- Kali Bug Tracker: https://bugs.kali.org/my_view_page.php
+
+#### 2. Getting started
+
+Kali on USB:
+
+1. Windows
+- Win32 Disk Imager, https://sourceforge.net/projects/win32diskimager/
+- Launch Win32 Disk Imager and choose the Kali Linux ISO file that you want to copy on the USB key.
+
+2. Linux GUI
+- Same on linux as above: GNOME desktop, "Restore Disk Image"
+
+3. Linux Command
+- ```# dd if=kali-linux-2020.3-live-amd64.iso of=/dev/sdb ```
+
+BIOS/UEFI 
+- key is often Delete or Escape, and sometimes F2, F8, F10 or F12.
+
+#### 3. Fundamentals
+- Linux isthe operating system kernel.
+- The kernel exports data about detected hardware through the /proc/ and /sys/ virtual file systems.
+- two types of device files: block(finite size) and character(a flow of characters). brw-rw----, crw-rw----
+- block: disk drives and partitions.  character: mouse, keyboard.
+- file system formats: ext2, ext3, ext4, VFAT; ``` mkfs.ext4 ``` make filesystem. other: NFS. (network filesystem)
+- process identifier (PID)
+- virtual console: ctr + alt + F1 to F6.
+- Environment variables: /etc/profile, ~/.profile, /etc/environment.
+- 
+
+
+
+---
+
+# EXP-100
+
+
+
+
+
+
+
+
+--- 
+
+# PEN-100
 
 ## Linux
 
@@ -203,6 +271,8 @@ read -p 'Enter your name: ' user
 
 operators
 ```
+ref link: https://linuxhint.com/bash_operator_examples/
+
 OPERATOR						DESCRIPTION: EXPRESSION TRUE IF...
 !EXPRESSION					The EXPRESSION is false.
 -n STRING							STRING length is greater than zero
@@ -222,6 +292,8 @@ INTEGER1 -le INTEGER2	INTEGER1 is less than or equal to INTEGER 2
 -w FILE								FILE exists and has write permission
 -x FILE								FILE exists and has execute permission
 ```
+
+
 
 if
 ```bash
@@ -294,3 +366,34 @@ display_usage
 # the Content between EOF will be printed as the input.
 # do some text art
 ```
+
+## python
+
+slice string
+```python
+tag = '<a href="https://www.offensive-security.com/blog">Blog</a>'
+start = "http"
+end = "\">"
+url = tag[tag.index(start):tag.index(end)]
+
+print(url)
+```
+
+File
+```python
+f = open("data.txt", "r")
+data = f.read()
+
+f = open("data.txt", "r")
+
+for line in f:
+    print(line)
+
+myData = "I'm sample data to be written to a file"
+
+f = open("data.txt", "a")
+f.write(myData)
+f.close()
+```
+
+
