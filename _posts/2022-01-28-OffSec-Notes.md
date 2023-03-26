@@ -60,7 +60,7 @@ BIOS/UEFI
 - process identifier (PID)
 - virtual console: ctr + alt + F1 to F6.
 - Environment variables: /etc/profile, ~/.profile, /etc/environment.
-- 
+- Filesystem Hierarchy Standard(FHS): /bin, /boot, /dev, /etc, /home, /lib, /media, /mnt, /opt, /root, /run, /sbin, /srv, /tmp, /usr, /var, /proc.
 
 
 
