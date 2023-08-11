@@ -15,20 +15,20 @@ https://dfirmadness.com/the-stolen-szechuan-sauce/
 
 # Methods
 
-	### Registry
+### Registry
 	``` some command ```
 	
-	### $I30 filter file "From Slack"
+### $I30 filter file "From Slack"
 	``` MFTECmd -f {$I30 path} --csv {output folder} --csvf {output file name}  ```
 	
 
 # Findings
 
-	## DESKTOP-SDN1RPT-Protected Files
+### DESKTOP-SDN1RPT-Protected Files
 	- find aaaa
 	- find bbbb
 
-	## DC01-ProtectedFiles
+### DC01-ProtectedFiles
 	- find cccc
 	- find dddd
 
